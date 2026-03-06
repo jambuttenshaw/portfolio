@@ -1,0 +1,26 @@
+{
+  "name": "portfolio",
+  "version": "1.0.0",
+  "description": "Personal portfolio website",
+  "homepage": "https://github.com/jambuttenshaw/portfolio#readme",
+  "bugs": {
+    "url": "https://github.com/jambuttenshaw/portfolio/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jambuttenshaw/portfolio.git"
+  },
+  "license": "ISC",
+  "author": "Jamie Buttenshaw",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "build": "eleventy",
+    "start": "eleventy --serve",
+    "dev": "eleventy --serve --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@11ty/eleventy": "^3.1.2"
+  }
+}
