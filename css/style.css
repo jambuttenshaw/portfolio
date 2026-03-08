@@ -78,6 +78,11 @@ h1, h2, h3 {
   color: #2c3e50;
 }
 
+h3 {
+  margin-bottom: 0;
+  font-size: 1.4rem;
+}
+
 h2 {
   display: inline-block;
   width: auto;
@@ -233,4 +238,18 @@ button:hover {
   .about-image {
     max-width: 100%;
   }
+}
+
+/* Experience boxes */
+.experience-box {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  outline: 1px solid #d0d0d0;
+}
+
+.experience-box h3 {
+  margin-bottom: 0.5rem;
 }
