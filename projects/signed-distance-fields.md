@@ -1,6 +1,6 @@
 ---
 layout: base.njk
-title: SDF Construction
+title: GPU-Driven SDF Construction
 description: Real-time Rendering and Construction of Signed Distance Fields
 technologies: C++, Direct3D 12
 github: https://github.com/jambuttenshaw/sdf-d3d12

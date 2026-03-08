@@ -2,7 +2,7 @@
   <table>
     <thead>
       <tr>
-        <th>Preview</th>
+        <th class="preview-column">Preview</th>
         <th>Project</th>
         <th>Description</th>
       </tr>
@@ -10,7 +10,7 @@
     <tbody>
       {% for project in collections.projects %}
       <tr>
-        <td>
+        <td class="preview-column">
           {% if project.data.image %}
           <img src="{{ project.data.image }}" alt="{{ project.data.title }} preview" style="max-width: 200px; height: auto;">
           {% else %}

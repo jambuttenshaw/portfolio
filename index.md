@@ -3,11 +3,20 @@ layout: base.njk
 title: Home
 ---
 
-## About Me
+# About Me
 
-I'm a research fellow in computer graphics and game engine technology for Virtual Production at the CoSTAR National Lab, based at Abertay University in Dundee.
+<section class="about-grid">
+  <div class="about-image">
+    <img src="images/me.png" alt="Jamie Buttenshaw profile photo">
+  </div>
+  <div class="about-text">
+    I'm a research fellow in computer graphics and game engine technology for Virtual Production at the CoSTAR National Lab, based at Abertay University in Dundee.
 
-## Featured Projects
+    I am a C++ developer with expertise in modern graphics APIs and GPU programming, and experience working with and extending game engines including Unreal Engine 5.
+  </div>
+</section>
+
+## Projects
 
 {% set table %}{% include "projects-table.njk" %}{% endset %}
 {{ table | safe }}
