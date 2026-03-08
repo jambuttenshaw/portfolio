@@ -2,16 +2,14 @@
   <table>
     <thead>
       <tr>
+        <th>Preview</th>
         <th>Project</th>
         <th>Description</th>
-        <th>Preview</th>
       </tr>
     </thead>
     <tbody>
       {% for project in collections.projects %}
       <tr>
-        <td><a href="{{ project.url }}">{{ project.data.title }}</a></td>
-        <td>{{ project.data.description }}</td>
         <td>
           {% if project.data.image %}
           <img src="{{ project.data.image }}" alt="{{ project.data.title }} preview" style="max-width: 200px; height: auto;">
@@ -19,6 +17,8 @@
           <em>No preview available</em>
           {% endif %}
         </td>
+        <td><a href="{{ project.url }}">{{ project.data.title }}</a></td>
+        <td>{{ project.data.description }}</td>
       </tr>
       {% endfor %}
     </tbody>
