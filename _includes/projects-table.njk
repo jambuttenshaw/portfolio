@@ -4,6 +4,7 @@
       <tr>
         <th class="preview-column"></th>
         <th>Project</th>
+        <th class="tags-column">Tags</th>
         <th>Description</th>
       </tr>
     </thead>
@@ -18,6 +19,12 @@
           {% endif %}
         </td>
         <td><a href="{{ project.url }}">{{ project.data.title }}</a></td>
+        <td class="tags-column">
+          {% if project.data.tags %}
+          {% set tags = project.data.tags %}
+          {% include "tags.njk" %}
+          {% endif %}
+        </td>
         <td>{{ project.data.description }}</td>
       </tr>
       {% endfor %}

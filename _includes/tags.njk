@@ -1,0 +1,31 @@
+{% set colors = ["#FF6B6B", "#4ECDC4", "#45B7D1", "#FFA07A", "#98D8C8", "#F7DC6F", "#BB8FCE", "#85C1E2", "#F8B88B", "#52C41A"] %}
+{% set borderColors = ["#E63946", "#0BA69E", "#2E8B9E", "#FF8A65", "#6BA89C", "#F5C23E", "#9D6BA8", "#5BA3C4", "#F39C5B", "#40994C"] %}
+
+<div class="tags-container">
+  {% for tag in tags %}
+    <span class="tag" style="background-color: {{ colors[loop.index0 % colors.length] }}; border-color: {{ borderColors[loop.index0 % borderColors.length] }}">
+      {{ tag }}
+    </span>
+  {% endfor %}
+</div>
+<style>
+  .tags-container {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 8px;
+    margin: 12px 0;
+    overflow-x: auto;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 20px;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    border: 2px solid;
+    flex-shrink: 0;
+  }
+</style>
