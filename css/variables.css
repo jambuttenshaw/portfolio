@@ -1,0 +1,35 @@
+/* Color and Font Variables */
+
+:root {
+  /* Fonts */
+  --font-primary: 'Segoe UI';
+  
+  /* Colors - Background */
+  --color-bg-primary: #1a1a1a;
+  --color-bg-secondary: #2d2d2d;
+  --color-bg-tertiary: #3a3a3a;
+  --color-bg-header-footer: #0f0f0f;
+  
+  /* Colors - Text */
+  --color-text-primary: #e0e0e0;
+  --color-text-secondary: white;
+  
+  /* Colors - Accent */
+  --color-accent-primary: #3498db;
+  --color-accent-hover: #2980b9;
+  
+  /* Colors - Borders & Dividers */
+  --color-border-light: #444;
+  --color-border-medium: #505050;
+  --color-border-divider: #606060;
+  
+  /* Colors - Tags */
+  --color-tag-cpp-bg: #ff6b6b;
+  --color-tag-cpp-border: #e63946;
+  --color-tag-d3d12-bg: #4ECDC4;
+  --color-tag-d3d12-border: #0BA69E;
+  --color-tag-d3d11-bg: #45B7D1;
+  --color-tag-d3d11-border: #2E8B9E;
+  --color-tag-raytracing-bg: #BB8FCE;
+  --color-tag-raytracing-border: #9D6BA8;
+}

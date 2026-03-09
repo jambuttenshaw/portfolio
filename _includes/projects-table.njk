@@ -10,6 +10,7 @@
     </thead>
     <tbody>
       {% for project in collections.projects %}
+      {% if project.data.hidden == false %}
       <tr>
         <td class="preview-column">
           {% if project.data.image %}
@@ -27,6 +28,7 @@
         </td>
         <td>{{ project.data.description }}</td>
       </tr>
+      {% endif %}
       {% endfor %}
     </tbody>
   </table>

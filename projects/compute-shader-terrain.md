@@ -3,7 +3,7 @@ layout: base.njk
 title: Compute Shader Procedural Terrain
 description: Terrain generation on the GPU and rendered in a custom DirectX 11 renderer.
 github: https://github.com/jambuttenshaw/ProceduralWorldGeneration
-featured: true
+hidden: true
 image: /images/terrain.png
 tags:
     - Cpp
