@@ -5,16 +5,13 @@ title: Home
 
 # About Me
 
-<section class="about-grid">
-  <div class="about-image">
-    <img src="images/me.png" alt="Jamie Buttenshaw profile photo">
-  </div>
-  <div class="about-text">
-    I'm a research fellow in computer graphics and game engine technology for Virtual Production at the CoSTAR National Lab, based at Abertay University in Dundee.
+I am a C++ developer with expertise in modern graphics APIs and GPU programming, and experience working with and extending game engines including Unreal Engine 5.
 
-    I am a C++ developer with expertise in modern graphics APIs and GPU programming, and experience working with and extending game engines including Unreal Engine 5.
-  </div>
-</section>
+Currently I am a Research Fellow in computer graphics and game engine technology at the CoSTAR National Lab, based at Abertay University in Dundee.
+
+- **Email:** jamie.buttenshaw@gmail.com
+- **LinkedIn:** [Jamie Buttenshaw](https://www.linkedin.com/in/jamiebuttenshaw/)
+- **GitHub:** [jambuttenshaw](https://github.com/jambuttenshaw)
 
 ## Projects
 
@@ -67,9 +64,3 @@ For excellence in my studies, I have been awarded:
 - **Hannah Maclure Prize** for excellence in maths (2021)
 
 </div>
-
-## Contact
-
-- **Email:** jamie.buttenshaw@gmail.com
-- **LinkedIn:** [Jamie Buttenshaw](https://www.linkedin.com/in/jamiebuttenshaw/)
-- **GitHub:** [jambuttenshaw](https://github.com/jambuttenshaw)

@@ -28,11 +28,11 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 2rem;
+  padding: 0 2em;
 }
 
 nav h1 {
-  font-size: 1.5rem;
+  font-size: 2.3rem;
   color: white;
 }
 
@@ -196,47 +196,18 @@ button:hover {
   background-color: #2980b9;
 }
 
-/* About section two-column layout */
-.about-grid {
-  display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 2rem;
-  align-items: start;
-  margin-bottom: 1.5rem;
-}
-
-.about-image {
-  max-width: 280px;
-}
-
-.about-image img {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-  display: block;
-}
-
-.about-text {
-  font-size: 1rem;
-}
-
 /* Hide preview column on small screens */
 .preview-column {
   display: table-cell;
 }
 
 @media (max-width: 768px) {
+  nav h1 {
+    font-size: 1.5rem;
+  }
+
   .preview-column {
     display: none;
-  }
-
-  .about-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .about-image {
-    max-width: 100%;
   }
 }
 

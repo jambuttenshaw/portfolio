@@ -1,9 +1,9 @@
 ---
 layout: base.njk
 title: GPU-Driven SDF Construction
-description: Real-time Rendering and Construction of Signed Distance Fields
-technologies: C++, Direct3D 12
-github: https://github.com/jambuttenshaw/sdf-d3d12
+description: Real-time Rendering and Construction of Signed Distance Fields, using GPU driven compute pipelines and DirectX Raytracing.
+technologies: C++, Direct3D 12, DirectX Raytracing
+github: https://github.com/jambuttenshaw/sdf_d3d12
 featured: true
 image: /images/sdf.png
 ---
@@ -14,6 +14,7 @@ This was my honours project in my final year at Abertay University, developed ov
 ## Technologies Used
 - C++
 - Direct3D 12
+- DirectX Raytracing
 - PIX (for debugging)
 - NVIDIA NSight & NVPerf SDK for profiling and analysis
 
@@ -21,4 +22,4 @@ This was my honours project in my final year at Abertay University, developed ov
 
 ## Source Code
 
-[View the source code on GitHub](https://github.com/jambuttenshaw/sdf-d3d12)
+[View the source code on GitHub]({{ github }})

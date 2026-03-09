@@ -9,6 +9,9 @@ export default function(eleventyConfig) {
     return collectionApi.getFilteredByGlob("projects/*.md");
   });
 
+  // Set current year
+  eleventyConfig.addFilter("year", () => new Date().getFullYear());
+
   // Set template engines
   return {
     dir: {
