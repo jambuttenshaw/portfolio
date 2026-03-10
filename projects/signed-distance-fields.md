@@ -18,6 +18,8 @@ tags:
 
 This was my honours project in my final year at Abertay University, developed over a period of 6 months.
 
+This page provides a blog-style description of the project, but you can also [read my full dissertation](/resources/Dissertation.pdf).
+
 [View the source code on GitHub]({{ github }})
 
 ## Introduction
