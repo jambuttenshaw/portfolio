@@ -28,7 +28,9 @@ Currently, I am a Research Fellow in computer graphics and game engine technolog
 **CoSTAR National Lab**<br>
 *July 2024 - Present*
 
-As a Research Fellow as part of the CoSTAR National Lab, I work at the cutting edge of real-time graphics to develop graphics, VFX, and engine tools for the future of Virtual Production and immersive experiences.
+As a Research Fellow as part of the CoSTAR National Lab, I work at the forefront of real-time technology to develop graphics, VFX, and game engine tooling for the future of Virtual Production and immersive experiences.
+
+My role bridges the gap between academia and industry, developing the cutting edge research into practical use cases and demonstrations to be taken forward into industrial applications.
 
 </div>
 
@@ -50,7 +52,7 @@ As a teaching assistant I helped teach graphics programming with shaders in Dire
 
 ### BSc(Hons) Computer Games Technology
 **Abertay University**<br>
-*2020-2024*
+*2020 - 2024*
 
 I specialised in graphics and engine programming, working directly with low-level graphics APIs to build performant systems, with a personal interest in advancing my C++ knowledge to use modern concepts to create elegant, modular, and maintanable code.
 

@@ -1,27 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
 /* Color and Font Variables */
 
 :root {
   /* Fonts */
-  --font-primary: 'Segoe UI';
+  --font-primary: 'Noto Sans';
   
   /* Colors - Background */
   --color-bg-primary: #1a1a1a;
   --color-bg-secondary: #2d2d2d;
   --color-bg-tertiary: #3a3a3a;
-  --color-bg-header-footer: #0f0f0f;
+  --color-bg-header-footer: #839788;
   
   /* Colors - Text */
   --color-text-primary: #e0e0e0;
   --color-text-secondary: white;
   
   /* Colors - Accent */
-  --color-accent-primary: #3498db;
-  --color-accent-hover: #2980b9;
+  --color-accent-primary: #2FBADC;
   
   /* Colors - Borders & Dividers */
-  --color-border-light: #444;
-  --color-border-medium: #505050;
-  --color-border-divider: #606060;
+  --color-border: #606060;
   
   /* Colors - Tags */
   --color-tag-cpp-bg: #ff6b6b;
