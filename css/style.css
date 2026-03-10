@@ -99,7 +99,7 @@ h3 {
   font-size: 1.4rem;
 }
 
-h1, h2 {
+main h1, main h2 {
   display: inline-block;
   width: auto;
   margin-left: auto;
@@ -111,7 +111,7 @@ h1, h2 {
   transition: border-bottom-color 0.3s;
 }
 
-h1::after, h2::after {
+main h1::after, main h2::after {
   content: '';
   position: absolute;
   bottom: 0;
@@ -122,7 +122,7 @@ h1::after, h2::after {
   transition: border-bottom-color 0.3s;
 }
 
-h1:hover::after, h2:hover::after {
+main h1:hover::after, main h2:hover::after {
   background: linear-gradient(to right, transparent 0%, var(--color-accent-primary) 20%, var(--color-accent-primary) 80%, transparent 100%);
 }
 
@@ -142,6 +142,32 @@ a {
 
 a:hover {
   text-decoration: underline;
+}
+
+/* About Section */
+.about-section {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+}
+
+.about-content {
+  flex: 1;
+}
+
+.about-picture {
+  width: 250px;
+  height: auto;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .about-section {
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 table {
@@ -190,7 +216,11 @@ td img:hover {
 
 @media (max-width: 768px) {
   nav h1 {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
+  }
+
+  nav ul li {
+    font-size: 0.9rem;
   }
 
   .preview-column {
@@ -222,6 +252,7 @@ td img:hover {
   flex-wrap: wrap;
   gap: 8px;
   margin: 12px 0;
+  justify-content: center;
 }
 
 .tag {

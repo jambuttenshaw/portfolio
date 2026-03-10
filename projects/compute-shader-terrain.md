@@ -15,8 +15,6 @@ tags:
 {% set tagslist %}{% include "tags.njk" %}{% endset %}
 {{ tagslist | safe }}
 
-This was my honours project in my final year at Abertay University, developed over a period of 6 months.
-
 ## Videos
 
 ## Source Code

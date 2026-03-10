@@ -9,9 +9,16 @@ tags:
 
 # About Me
 
-I am a C++ developer with expertise in modern graphics APIs and GPU programming, and experience working with and extending game engines including Unreal Engine 5.
+<div class="about-section">
+  <div class="about-content">
+    <p>I am a C++ developer with expertise in modern graphics APIs and GPU programming, and experience working with and extending game engines including Unreal Engine 5.</p>
 
-Currently, I am a Research Fellow in computer graphics and game engine technology at the CoSTAR National Lab, based at Abertay University in Dundee.
+    <p>Currently, I am a Research Fellow in computer graphics and game engine technology at the CoSTAR National Lab, based at Abertay University in Dundee.</p>
+  </div>
+  <img src="/images/profile.png" alt="Profile picture" class="about-picture">
+</div>
+
+## Skills
 
 {% set skilllist %}{% include "tags.njk" %}{% endset %}
 {{ skilllist | safe }}
