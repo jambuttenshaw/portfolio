@@ -218,11 +218,11 @@ td img:hover {
 
 /* Tags */
 .tags-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin: 12px 0;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0;
+}
 
 .tag {
   display: inline-block;
@@ -253,4 +253,9 @@ td img:hover {
 .tag#Raytracing {
   background-color: var(--color-tag-raytracing-bg);
   border-color: var(--color-tag-raytracing-border);
+}
+
+.tag#UE5 {
+  background-color: var(--color-tag-ue5-bg);
+  border-color: var(--color-tag-ue5-border);
 }

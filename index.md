@@ -1,6 +1,10 @@
 ---
 layout: base.njk
 title: Home
+tags:
+    - Cpp
+    - D3D12
+    - UE5
 ---
 
 # About Me
@@ -8,6 +12,9 @@ title: Home
 I am a C++ developer with expertise in modern graphics APIs and GPU programming, and experience working with and extending game engines including Unreal Engine 5.
 
 Currently, I am a Research Fellow in computer graphics and game engine technology at the CoSTAR National Lab, based at Abertay University in Dundee.
+
+{% set skilllist %}{% include "tags.njk" %}{% endset %}
+{{ skilllist | safe }}
 
 - **Email:** jamie.buttenshaw@gmail.com
 - **LinkedIn:** [Jamie Buttenshaw](https://www.linkedin.com/in/jamiebuttenshaw/)
