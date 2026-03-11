@@ -290,3 +290,29 @@ td img:hover {
   background-color: var(--color-tag-ue5-bg);
   border-color: var(--color-tag-ue5-border);
 }
+/* GitHub Link */
+.github-link {
+  background-color: var(--color-bg-header-footer);
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  display: block;
+  margin: 1.5rem auto;
+  text-align: center;
+  width: fit-content;
+}
+
+.github-link a {
+  color: var(--color-text-secondary);
+}
+
+.github-link a:hover {
+  color: var(--color-accent-secondary);
+}
+
+.github-link .fa {
+  margin-right: 0.5rem;
+}
+
+.github-link .fa-github {
+  font-size: 1.6rem;
+}

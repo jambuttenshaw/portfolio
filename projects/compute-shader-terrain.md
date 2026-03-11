@@ -15,8 +15,4 @@ tags:
 {% set tagslist %}{% include "tags.njk" %}{% endset %}
 {{ tagslist | safe }}
 
-## Videos
-
-## Source Code
-
-[View the source code on GitHub]({{ github }})
+{% include "github-link.njk" %}
