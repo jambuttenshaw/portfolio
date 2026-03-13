@@ -11,9 +11,13 @@ tags:
 
 <div class="about-section">
   <div class="about-content">
-    <p>I am a C++ developer with expertise in modern graphics APIs and GPU programming, and experience working with and extending game engines including Unreal Engine 5.</p>
+    <p>
+    I am a C++ developer and graphics programmer, with expertise in D3D12 and HLSL and experience working at a low level with game engines including Unreal Engine 5.
+    
+    I'm particularly interested in GPU-driven rendering pipelines, volumetric rendering, and real-time path tracing.
 
-    <p>Currently, I am a Research Fellow in computer graphics and game engine technology at the CoSTAR National Lab, based at Abertay University in Dundee.</p>
+    Currently, I am a Research Fellow in computer graphics and game engine technology at the CoSTAR National Lab, based at Abertay University in Dundee.
+    </p>
   </div>
   <img src="/images/profile.png" alt="Profile picture" class="about-picture">
 </div>

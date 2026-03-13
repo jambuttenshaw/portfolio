@@ -1,7 +1,8 @@
 ---
 layout: base.njk
-title: GPU-Driven SDF Construction
-description: An investigation of GPU-driven tree construction algorithms for Signed Distance Field geometry, as well as using procedural geometry in DirectX Raytracing pipelines for rendering.
+title: GPU-Driven Signed Distance Field Construction
+description: 
+    An investigation of GPU-driven tree construction algorithms for Signed Distance Field geometry, as well as using procedural geometry in DirectX Raytracing pipelines for rendering.
 github: https://github.com/jambuttenshaw/sdf_d3d12
 hidden: false
 image: /images/sdf.png
@@ -43,7 +44,13 @@ For my project, I also needed a structure that could be constructed quickly. To 
 
 ## Implementation
 
--- The pipeline --
+The pipeline for constructing SDF geometry in my project looks like this:
+
+- **Create an edit list.** This is the 'recipe' of the object if you like, consisting of a list of primitive shapes and operations to combine them together (union, subtraction, etc).
+- **Edit dependency analysis.** This is a pre-process step to enable edit culling - discussed below.
+- **Hierarchical brick construction.** Bricks are created in an iterative process, quartering in size with each iteration to converge around the geometry surface.
+- **Edit culling.** This is the key optimization to enable real-time construction.
+- **Brick evaluation.** Once all of the bricks have been identified, they each need to be filled with distance field data. This distance field data is then later rendered using sphere-tracing.
 
 My main contribution with this project is a fast and parallel way to construct this set of bricks and evaluate the distance values they contain, so most of this section will be spent describing the construction algorithm.
 
@@ -53,6 +60,14 @@ I implemented a hierarchical process to iteratively refine bricks toward the sur
 
 ### Edit Culling
 
+With the hierarchical brick construction method, evaluating the distance field within each brick is significantly the bottleneck of the construction pipeline. The obvious optimization is to realize that now we are only representing a subset of all 3D space within the bricks, edits are local - they only affect the distance field to a certain point and not beyond. Therefore, we can cull edits for bricks in which they will have no influence. However, determining an edits influence is not as trivial as you might think.
+
+The introduction of 'smooth blending' operations, which is one of the most satisfying features of SDF geometry, means that the influence of edits extends beyond the geometric bounds of the primitive shape itself. Additionally, edits within the edit list will influence other edits that appear later in the list.
+
+This requires an analysis of what I called 'edit dependencies'. This is the identification of which edits are influenced by preceding edits in the list, and ensure that an edit is only culled if all of its dependencies are also able to be culled.
+
+With an understanding of the dependencies established as a pre-pass to construction (because the edit list does not change throughout construction), edit culling is refined iteratively throughout hierarchical brick construction. This is achieved by refining 'index buffers' for each brick, which maintains a list of only the relevant edits for each brick. This introduces a memory overhead to store these index buffers, but dramatically accelerates distance field evaluation - especially as scenes scale in number of bricks and/or edits.
+
 ### Raytracing
 
 Now that the acceleration structure and brick data has been constructed, rendering can be performed. I implemented this using a custom intersection shader in the raytracing pipeline.
@@ -61,7 +76,7 @@ The intersection shader will determine where the ray entered the bounding box of
 
 ## Results & Conclusions
 
-
+The current method uses a significantly amount of transient memory between stages. Implementing this pipeline with DirectX 12 Work Graphs would allow for much more efficient usage of transient memory.
 
 ## Videos
 
