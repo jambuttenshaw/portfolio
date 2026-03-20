@@ -22,6 +22,7 @@ tags:
   <img src="/images/profile.png" alt="Profile picture" class="about-picture">
 </div>
 
+<!--
 ## Skills
 
 {% set skilllist %}{% include "tags.njk" %}{% endset %}
@@ -30,6 +31,7 @@ tags:
 - **Email:** jamie.buttenshaw@gmail.com
 - **LinkedIn:** [Jamie Buttenshaw](https://www.linkedin.com/in/jamiebuttenshaw/)
 - **GitHub:** [jambuttenshaw](https://github.com/jambuttenshaw)
+-->
 
 ## Projects
 

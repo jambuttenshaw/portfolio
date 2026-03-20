@@ -29,6 +29,12 @@ The cool thing about SDFs is they can be used for [constructive solid geometry](
 
 However, animating SDF geometry is a challenge. *Dreams* circumvents this by not allowing the individual primitive shapes (known as 'edits') that constitute each model to change over time. This is a limitation I wanted to investigate and attempt to overcome in this project.
 
+In the rest of the page, I'm going to discuss:
+- Existing background work that inspired me, what I took from it and what I adapted.
+- The final implementation I went with in my project.
+- The results of testing my implementation.
+- Conclusions and opportunities for future work.
+
 ## Background
 
 Signed distance fields come in two varieties - continuous and discrete. Continuous signed distance functions are what you would have seen in places like [Shadertoy](LINK). The entire scene is represented by a single distance function, which is evaluated at each step of each ray. This quickly becomes challenging; rendering time scales very poorly with scene complexity, and it is for this reason that continuous SDFs are avoided for representing complex geometry in most real-time applications.
@@ -44,19 +50,18 @@ For my project, I also needed a structure that could be constructed quickly. To 
 
 ## Implementation
 
+My main contribution with this project is a fast and parallel way to construct SDF geometry, so most of this section will be spent describing the construction algorithm. The key building block of my SDF geometry is 'bricks' (more terminology borrowed from *Dreams*), which is an AABB that encapsulates 8x8x8 distance values.
 The pipeline for constructing SDF geometry in my project looks like this:
 
 - **Create an edit list.** This is the 'recipe' of the object if you like, consisting of a list of primitive shapes and operations to combine them together (union, subtraction, etc).
 - **Edit dependency analysis.** This is a pre-process step to enable edit culling - discussed below.
 - **Hierarchical brick construction.** Bricks are created in an iterative process, quartering in size with each iteration to converge around the geometry surface.
 - **Edit culling.** This is the key optimization to enable real-time construction.
-- **Brick evaluation.** Once all of the bricks have been identified, they each need to be filled with distance field data. This distance field data is then later rendered using sphere-tracing.
-
-My main contribution with this project is a fast and parallel way to construct this set of bricks and evaluate the distance values they contain, so most of this section will be spent describing the construction algorithm.
+- **Distance field evaluation.** Once all of the bricks have been identified, they each need to be filled with distance field data. This distance field data is then later rendered using sphere-tracing.
 
 ### Constructing Bricks
 
-I implemented a hierarchical process to iteratively refine bricks toward the surface of the object.
+The first challenge to building SDF geometry is to decide where to evaluate the distance field. Clearly I cannot evaluate every point in space, especially not in real-time. 
 
 ### Edit Culling
 
@@ -76,7 +81,9 @@ The intersection shader will determine where the ray entered the bounding box of
 
 ## Results & Conclusions
 
-The current method uses a significantly amount of transient memory between stages. Implementing this pipeline with DirectX 12 Work Graphs would allow for much more efficient usage of transient memory.
+If I were to develop this further, I would be interested in investigating the following:
+- The current method uses a significantly amount of transient memory between stages. Implementing this pipeline with DirectX 12 Work Graphs would allow for much more efficient usage of transient memory.
+- It would be very interesting to investigate a 'lazy evaluation' system - similar to the GPU-driven out-of-core rendering of [Gigavoxels](https://dl.acm.org/doi/10.1145/1507149.1507152) (Crassin et al, 2009).
 
 ## Videos
 
