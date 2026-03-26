@@ -72,6 +72,7 @@ This two-level rendering process, using hardware-accelerated raytracing to find 
 <!-- INSERT GRAPH OF RENDER TIME VS BRICK COUNT to demonstrate scalability -->
 
 <!-- INSERT SIDE-BY-SIDE IMAGES OF RAYTRACING THOUSANDS OF OBJECTS PLUS THE VIEW OF THEIR BRICKS -->
+![](/images/raytracing2.png)
 
 
 ### Constructing Bricks
@@ -80,12 +81,16 @@ The first challenge to building SDF geometry is to decide where to evaluate the 
 
 A sparse representation of the distance field improves scalability. We place bricks in regions of space that contain any surface (i.e., a region of space which contains both positive and negative distance values), and each brick will point to some region of a 'brick atlas' which stores the distance values for the entire object in a compact manner. The challenge lies in determining where these regions of space that contain a surface lie. The method I went with was a hierarchical refinement of space to narrow-in on regions of space that contain a surface.
 
+![](/images/brickPool.png)
+
 In this hierarchical process, if a brick contains a surface, it will split into 64 sub-bricks in the next iteration, with one-quarter the side length. This method is well suited for the GPU for a bunch of reasons:
 - One compute shader group can operate on each brick, with one thread executing per candidate sub-brick. These threads can co-operate with loading edits into group-shared memory to reduce the VRAM bandwidth consumed.
 - A prefix-sum is performed to calculate indices to place the sub-bricks. Only the sums of sub-bricks-per-brick need to scanned, which significantly reduces the amount of data to operate on. Scanning allows a compact buffer to be maintained, improving cache usage when loading bricks from VRAM in later stages.
 - Sub-bricks are sorted by Morton codes calculated from their positions before inserting them into the buffer. This ensures that bricks nearby in space are located nearby in the buffer, which reduces cache thrashing due to incoherent data.
 - A consequence of the hierarchical process is that sorting bricks within each group before placing them in the buffer is enough to guarantee that the entire buffer is sorted at the end of the construction process. You can understand this by considering how the most significant bits of the Morton codes do not change with proceeding iterations.
 - D3D12's indirect execution model can be utilized for the GPU to feed itself work for each subsequent iteration. The total number of iterations can be calculated on the CPU ahead of time by deciding on an initial and minimum brick size.
+
+![](/images/hierarchical.png)
 
 Once all bricks are placed, we know exactly where to evaluate the distance field. Each brick contains 8x8x8 distance values, and each of these can be calculated by iterating through the edit list and evaluating each edit in turn at the current point in space. One compute shader group operates per brick, so the threads can co-operate in loading edits into group-shared memory to reduce memory bandwidth.
 
@@ -100,6 +105,8 @@ The introduction of 'smooth blending' operations, which is one of the most satis
 This requires an analysis of what I called 'edit dependencies'. This is the identification of which edits are influenced by preceding edits in the list, and ensure that an edit is only culled if all of its dependencies are also able to be culled.
 
 With an understanding of the dependencies established as a pre-pass to construction (because the edit list does not change throughout construction), edit culling is refined iteratively throughout hierarchical brick construction. This is achieved by refining 'index buffers' for each brick, which maintains a list of only the relevant edits for each brick. This introduces a memory overhead to store these index buffers, but dramatically accelerates distance field evaluation - especially as scenes scale in number of bricks and/or edits.
+
+![](/images/editCount.png)
 
 ## Conclusions
 
