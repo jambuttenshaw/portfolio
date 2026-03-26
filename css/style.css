@@ -253,6 +253,7 @@ td img:hover {
   gap: 8px;
   margin: 12px 0;
   justify-content: center;
+  line-height: 1.2;
 }
 
 .tag {
@@ -264,6 +265,14 @@ td img:hover {
   font-size: 14px;
   font-weight: 500;
   white-space: nowrap;
+  line-height: 1.2;
+}
+
+.tags-column .tags-container {
+  margin: 0;
+  justify-content: flex-start;
+  line-height: 1.1;
+  gap: 0px 2px;
 }
 
 .tag#Cpp {
@@ -315,4 +324,11 @@ td img:hover {
 
 .github-link .fa-github {
   font-size: 1.6rem;
+}
+
+/* Main content images */
+main img {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
