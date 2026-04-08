@@ -1,6 +1,46 @@
 // Basic JavaScript for portfolio interactions
 
+// Theme Detection
+function initializeTheme() {
+  // Check if user has a saved theme preference
+  const savedTheme = localStorage.getItem('theme');
+  
+  if (savedTheme) {
+    // Use saved preference
+    applyTheme(savedTheme);
+  } else {
+    // Check OS preference
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+      applyTheme('light');
+    } else {
+      // Default to dark theme
+      applyTheme('dark');
+    }
+  }
+  
+  // Listen for OS preference changes
+  if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
+      // Only auto-switch if user hasn't set a preference
+      if (!localStorage.getItem('theme')) {
+        applyTheme(e.matches ? 'light' : 'dark');
+      }
+    });
+  }
+}
+
+function applyTheme(theme) {
+  if (theme === 'light') {
+    document.documentElement.style.colorScheme = 'light';
+  } else {
+    document.documentElement.style.colorScheme = 'dark';
+  }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
+  // Initialize theme
+  initializeTheme();
+  
   // Add smooth scrolling to navigation links
   const navLinks = document.querySelectorAll('nav a');
 

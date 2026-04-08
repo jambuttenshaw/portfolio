@@ -72,7 +72,7 @@ This two-level rendering process, using hardware-accelerated raytracing to find 
 <!-- INSERT GRAPH OF RENDER TIME VS BRICK COUNT to demonstrate scalability -->
 
 <!-- INSERT SIDE-BY-SIDE IMAGES OF RAYTRACING THOUSANDS OF OBJECTS PLUS THE VIEW OF THEIR BRICKS -->
-![](/images/raytracing2.png)
+![](/images/raytracing.png)
 
 
 ### Constructing Bricks

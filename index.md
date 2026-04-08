@@ -33,12 +33,12 @@ tags:
 - **GitHub:** [jambuttenshaw](https://github.com/jambuttenshaw)
 -->
 
-## Projects
+## Featured Projects
 
 {% set table %}{% include "projects-table.njk" %}{% endset %}
 {{ table | safe }}
 
-[View All Projects](projects.md)
+[View All Projects](projects)
 
 ## Experience
 

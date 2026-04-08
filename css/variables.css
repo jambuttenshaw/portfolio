@@ -6,6 +6,7 @@
   /* Fonts */
   --font-primary: 'Noto Sans';
   
+  /* Default to Dark Theme */
   /* Colors - Background */
   --color-bg-primary: #1a1a1a;
   --color-bg-secondary: #2d2d2d;
@@ -34,4 +35,38 @@
   --color-tag-raytracing-border: #9D6BA8;
   --color-tag-ue5-bg: #F8B88B;
   --color-tag-ue5-border: #F39C5B;
+}
+
+/* Light Theme */
+@media (prefers-color-scheme: light) {
+  :root {
+    /* Colors - Background */
+    --color-bg-primary: #ffffff;
+    --color-bg-secondary: #f5f5f5;
+    --color-bg-tertiary: #eeeeee;
+    --color-bg-header-footer: #bee1d4;
+    
+    /* Colors - Text */
+    --color-text-primary: #333333;
+    --color-text-secondary: #1a1a1a;
+    
+    /* Colors - Accent */
+    --color-accent-primary: #0099cc;
+    --color-accent-secondary: #2d6a3e;
+    
+    /* Colors - Borders & Dividers */
+    --color-border: #cccccc;
+    
+    /* Colors - Tags */
+    --color-tag-cpp-bg: #ffcccc;
+    --color-tag-cpp-border: #e63946;
+    --color-tag-d3d12-bg: #cce8e5;
+    --color-tag-d3d12-border: #0BA69E;
+    --color-tag-d3d11-bg: #cce3f0;
+    --color-tag-d3d11-border: #2E8B9E;
+    --color-tag-raytracing-bg: #e6d9f0;
+    --color-tag-raytracing-border: #9D6BA8;
+    --color-tag-ue5-bg: #ffe0cc;
+    --color-tag-ue5-border: #F39C5B;
+  }
 }
