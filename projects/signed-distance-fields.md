@@ -12,22 +12,29 @@ tags:
     - Raytracing
 ---
 
+<!--
+TODO:
+- Add banner image.
+- Add captions to images.
+- Add data and comment on findings.
+-->
+
 # GPU-Driven Signed Distance Fields Construction
 
 {% set tagslist %}{% include "tags.njk" %}{% endset %}
 {{ tagslist | safe }}
 
-This was my honours project in my final year at Abertay University, developed over a period of 6 months. This page provides a blog-style description of the project, but you can also [read my full dissertation](/resources/Dissertation.pdf).
+This project was developed over a period of 6 months to fulfill my honours degree at Abertay University. This page provides a blog-style description of the project, but you can also [read my full dissertation](/resources/Dissertation.pdf).
 
 {% include "github-link.njk" %}
 
 ## Introduction
 
-Signed distance fields (SDFs) are an implicit representation of geometry. They are a scalar field of the distance to the nearest surface at each point in space, and inside vs outside of the surface is denoted by the sign of the distance value (e.g., inside is negative). SDFs can be easily rendered using a technique called [sphere tracing](LINK-TO-A-SHADERTOY).
+Signed distance fields (SDFs) are an implicit representation of geometry. They are a scalar field of the distance to the nearest surface at each point in space, and inside vs outside of the surface is denoted by the sign of the distance value (e.g., inside is negative). SDFs are usually rendered using a technique called [sphere tracing](LINK-TO-A-SHADERTOY).
 
 The cool thing about SDFs is they can be used for [constructive solid geometry](LINK) (CSG), which allows various elementary operations between primitive shapes to create more complex and interesting geometry. For this reason, SDFs were notably used as the geometry representation in [*Dreams* by Media Molecule](LINK), as well as [*Claybook* by Second Order](LINK).
 
-However, **animating SDF geometry is a challenge**. *Dreams* circumvents this by not allowing the individual primitive shapes that constitute each model (known as 'edits') to change over time. I wanted to investigate and attempt to overcome this limitation in this project.
+However, **animating SDF geometry is a challenge**. *Dreams* circumvents this by not allowing the individual primitive shapes that constitute each model (which they call 'edits') to change over time. I wanted to investigate and attempt to overcome this limitation in this project.
 
 In the rest of the page, I'm going to discuss:
 - Existing background work that inspired me, what I took from it and what I adapted.
@@ -39,27 +46,27 @@ I mostly focus on my decision-making processes and outline the pipeline that I d
 
 ## Background
 
-Signed distance fields come in two varieties - continuous and discrete. Continuous signed distance functions are what you would have seen in places like [Shadertoy](LINK). The entire scene is represented by a single distance function, which is evaluated at each step of each ray. This quickly becomes challenging; rendering time scales very poorly with scene complexity, and it is for this reason that continuous SDFs are avoided for representing complex geometry in most real-time applications.
+Signed distance fields come in two varieties - continuous and discrete. Continuous signed distance functions are what you would have seen in places like [Shadertoy](LINK). The entire scene is represented by a single distance function, which is evaluated at each step of each ray. In practice, this doesn't scale well; rendering time generally increases non-linearly with scene complexity, and it is for this reason that continuous SDFs are avoided for representing complex geometry in most real-time applications.
 
 An alternative is to make the distance field discrete - evaluate the entire distance function for every point in space and cache the result into a 3D grid. Then, when you come to render the distance field, evaluating costly distance functions is replaced by lookups from memory. This introduces a trade-off between the memory consumption of the distance field and the resolution (and therefore quality) of the rendered distance field. 
 
 There are many options for how to represent the grid data (e.g., sparse vs dense), and different data structures provide different ways to accelerate traversal during rendering. [Ray Tracing of Signed Distance Function Grids](https://jcgt.org/published/0011/03/06/paper-lowres.pdf) by So&#776;derlund, Evans, and Akenine-Mo&#776;ller was a significant inspiration for this project. While their main contribution was an analytical ray-SDF intersection method, they also perform a thorough comparison between different SDF representations and acceleration structures. They found that a sparse set of 'bricks' (chunks of distance values - in the paper 8x8x8 collections of distance values were used) accompanied with a bounding volume hierarchy (BVH) for accelerating traversal provided a good trade-off between fast rendering and lower memory overhead.
 
 For my project, I also needed a structure that could be constructed quickly. To animate the primitive signed distance functions within an object, I would need to rebuild the acceleration structure every frame. I decided to move forward with a sparse-brick-set approach for the following reasons:
-- 'Bricks' are at a coarser granularity than voxels, so I reckoned constructing bricks would be faster than individual voxels.
+- 'Bricks' are at a coarser granularity than 'voxels' (where a voxel can be formed of 2x2x2 distance field samples), so I reckoned constructing bricks would be faster than individual voxels.
 - To build the BVH, I could leverage DirectX Raytracing (DXR)'s API. This enables use of the raytracing hardware on modern GPUs for rendering.
 - With bricks being coarser, and having 64 distance samples per brick, this presents opportunities to leverage group-shared memory for groups of GPU threads to collaborate on a single brick.
 
 ## Implementation
 
-My main contribution with this project is a fast and parallel way to construct SDF geometry, so most of this section will be spent describing the construction algorithm. The key building block of my SDF geometry is 'bricks' (more terminology borrowed from *Dreams*), which is an AABB that encapsulates 8x8x8 distance values.
+My main contribution with this project is a fast and parallel method of constructing SDF geometry, so most of this section will be spent describing the construction algorithm. The key building block of my SDF geometry is 'bricks' (more terminology borrowed from *Dreams*), which is an AABB that encapsulates 8x8x8 distance values.
 The pipeline for constructing SDF geometry in my project looks like this:
 
 - **Create an edit list.** This is the 'recipe' of the object if you like, consisting of a list of primitive shapes and operations to combine them together (union, subtraction, etc).
-- **Edit dependency analysis.** This is a pre-process step to enable edit culling - discussed below.
-- **Hierarchical brick construction.** A tree of bricks is created in an iterative process, quartering in size with each level to converge around the geometry surface.
-- **Edit culling.** This is the key optimization to enable real-time construction.
-- **Distance field evaluation.** Once all of the bricks have been identified, they each need to be filled with distance field data. This distance field data is then later rendered using sphere-tracing.
+- **Edit dependency analysis.** This is a pre-process step to enable edit culling by working out how edits affect one another.
+- **Hierarchical brick construction.** A tree of bricks is created in an iterative process, quartering in size with each level to converge around the geometry surface. The number of iterations performed determines the resulting size of the bricks (and consequently the resolution of the geometry).
+- **Edit culling.** This is the key optimization to enable real-time construction, by only evaluating the signed distance functions that will definitely influence the distance field values.
+- **Distance field evaluation.** Once all of the bricks have been identified, they each need to be filled with distance field data. This distance field data is then later rendered using a combination of hardware-accelerated raytracing and software sphere-tracing.
 
 Once SDF geometry is constructed, I make use of the hardware-accelerated DirectX Raytracing API to render it. The rendering pipeline looks like this:
 - **Build BVH.** A bounding-volume hierarchy is built around the leaf nodes of the brick tree.
@@ -71,7 +78,6 @@ This two-level rendering process, using hardware-accelerated raytracing to find 
 
 <!-- INSERT GRAPH OF RENDER TIME VS BRICK COUNT to demonstrate scalability -->
 
-<!-- INSERT SIDE-BY-SIDE IMAGES OF RAYTRACING THOUSANDS OF OBJECTS PLUS THE VIEW OF THEIR BRICKS -->
 ![](/images/raytracing.png)
 
 
@@ -94,7 +100,7 @@ In this hierarchical process, if a brick contains a surface, it will split into 
 
 Once all bricks are placed, we know exactly where to evaluate the distance field. Each brick contains 8x8x8 distance values, and each of these can be calculated by iterating through the edit list and evaluating each edit in turn at the current point in space. One compute shader group operates per brick, so the threads can co-operate in loading edits into group-shared memory to reduce memory bandwidth.
 
-With hierarchical brick construction, building the tree of bricks is blazingly fast compared to evaluating the distance field they encompass.
+In the early iterations of hierarchical brick construction the GPU suffers from low occupancy due to the small workloads. Only after a few iterations are enough bricks spawned to keep the GPU fully fed. However, building the tree of bricks is blazingly fast compared to evaluating the distance field they encompass, so it was much more worthwhile to optimize the distance field evaluation. This was done by introducing *edit culling*...
 
 ### Edit Culling
 
@@ -107,6 +113,8 @@ This requires an analysis of what I called 'edit dependencies'. This is the iden
 With an understanding of the dependencies established as a pre-pass to construction (because the edit list does not change throughout construction), edit culling is refined iteratively throughout hierarchical brick construction. This is achieved by refining 'index buffers' for each brick, which maintains a list of only the relevant edits for each brick. This introduces a memory overhead to store these index buffers, but dramatically accelerates distance field evaluation - especially as scenes scale in number of bricks and/or edits.
 
 ![](/images/editCount.png)
+
+<!-- INSERT DATA COMPARING WITH / WITHOUT EDIT CULLING TO SHOW PERFORMANCE IMPROVEMENT -->
 
 ## Conclusions
 
