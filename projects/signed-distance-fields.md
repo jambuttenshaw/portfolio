@@ -35,7 +35,7 @@ This project was developed over a period of 6 months to fulfill my honours degre
 Signed distance fields (SDFs) are an implicit representation of geometry
 with useful properties, e.g. constructive solid geometry. They are useful for sculpting tools, deformable objects, fluids, and volumetric effects. These techniques can be challenging to perform with polygons. 
 Until recently, the use of SDFs in real-time interactive applications has been
-limited due to performance and memory constraints. It has been investigated how SDFs can be rendered in real-time, however, the study of discrete SDFs that are also modifiable in real-time has not been investigated to the same depth.
+limited due to performance and memory constraints. There has been lots of investigation into how SDFs can be rendered in real-time; however, the study of discrete SDFs that are also modifiable in real-time has not been investigated to the same depth.
 
 This project implements a sparse representation of SDFs, which is constructed with a GPU-driven compute shader pipeline, and rendered using hardware-accelerated raytracing and software sphere-tracing. The top-down
 construction algorithm hierarchically refines space and uses culling solutions to accelerate distance field evaluation.
@@ -44,29 +44,29 @@ Results found that rendering is scalable with the number of primitives, and demo
 construction performance, improving construction time by orders of magnitude.
 
 In the rest of the page, I'm going to discuss:
-- Existing background work that inspired me, what I took from it and what I adapted.
+- Background work that inspired me, what I took from it, and what I adapted.
 - The GPU-driven construction pipeline I implemented.
-- Important optimizations to enable real-time performance.
+- The crucial optimizations to enable real-time performance.
 - Conclusions drawn from the project.
 
-I mostly focus on my decision-making processes and outline the pipeline that I developed - for full technical details on how it works, [my dissertation is available to read](/resources/Dissertation.pdf)!
+I mostly focus on my decision-making and outline the pipeline that I developed - for full technical details on how it works, [my dissertation is available to read](/resources/Dissertation.pdf)!
 
 ## Background
 
-Signed distance fields come in two varieties - continuous and discrete. [The work of Inigo Quilez](https://iquilezles.org/articles/raymarchingdf/) is a superb example of continuous signed distance functions. In these examples, the entire scene is represented by a single distance function, which is evaluated at each step of each ray. While effective for graphics demos, this doesn't scale well; rendering time generally increases non-linearly with scene complexity, and it is for this reason that continuous SDFs are avoided for representing complex geometry in most real-time applications.
+Signed distance fields come in two varieties - continuous and discrete. The work of [Inigo Quilez](https://iquilezles.org/articles/raymarchingdf/) is a superb example of continuous signed distance functions. In these examples, the entire scene is represented by a single distance function, which is evaluated at each step of each ray. While effective for graphics demos, this doesn't scale well; rendering time generally increases non-linearly with scene complexity, and it is for this reason that continuous SDFs are avoided for representing complex geometry in most real-time applications.
 
 An alternative is to make the distance field discrete - evaluate the entire distance function for every point in space in advance and cache the result into a 3D grid. Then, when you come to render the distance field, costly distance function evaluations are replaced by texture lookups. This introduces a trade-off between the memory consumption of the distance field and the resolution (and therefore quality) of the rendered object. This approach is used in [*Claybook* by Second Order](https://claybookgame.com/).
 
-There are many options for how to represent the grid data (e.g., sparse vs dense), and different data structures provide different ways to accelerate traversal during rendering. [Ray Tracing of Signed Distance Function Grids](https://jcgt.org/published/0011/03/06/paper-lowres.pdf) by So&#776;derlund, Evans, and Akenine-Mo&#776;ller was a significant inspiration for this project. While their main contribution was an analytical ray-SDF intersection method, they also perform a thorough comparison between different SDF representations and acceleration structures. They found that a sparse set of 'bricks' (chunks of distance values - in the paper 8x8x8 collections of distance values were used) accompanied with a bounding volume hierarchy (BVH) for accelerating traversal provided a good trade-off between fast rendering and lower memory overhead.
+There are many options for how to represent the grid data (e.g., sparse vs dense), and different data structures provide different ways to accelerate traversal during rendering. [Ray Tracing of Signed Distance Function Grids](https://jcgt.org/published/0011/03/06/paper-lowres.pdf) by So&#776;derlund, Evans, and Akenine-Mo&#776;ller was a significant inspiration for this project. While their main contribution was an analytical ray-SDF intersection method, they also perform a thorough comparison between different SDF representations and acceleration structures. They found that a sparse set of 'bricks' (cubes of distance values - in the paper 8x8x8 distance values were used) accompanied with a bounding volume hierarchy (BVH) for accelerating traversal provided a good trade-off between fast rendering and lower memory overhead.
 
 For my project, I also needed a structure that could be constructed quickly. To animate the primitive signed distance functions within an object, I would need to rebuild the acceleration structure every frame. I decided to build on the sparse-brick-set approach described by So&#776;derlund et al (and similar to the geometry representation used in [*Dreams* by Media Molecule](https://www.playstation.com/en-gb/games/dreams/)) for the following reasons:
-- 'Bricks' are at a coarser granularity than 'voxels' (where a voxel can be formed of 2x2x2 distance field samples), so I reckoned constructing bricks would be faster than individual voxels.
+- 'Bricks' are at a coarser granularity than 'voxels' (where a voxel can be formed of 2x2x2 distance field samples), which will favour faster construction. This is less optimal for rendering performance, as an additional sphere-tracing step would be required in the intersection shader.
 - To build the BVH, I could leverage DirectX Raytracing (DXR)'s API. This enables use of the raytracing hardware on modern GPUs for rendering.
 - 64 distance samples per brick fits nicely within a compute shader group, allowing the leverage of group-shared memory and helping to keep the GPU nicely full of work.
 
 ## Implementation
 
-My main contribution with this project is a fast and parallel method of constructing SDF geometry, so most of this section will be spent describing the construction algorithm. The key building block of my SDF geometry is 'bricks' (terminology borrowed from *Dreams*), which is an AABB that encapsulates 8x8x8 distance values.
+My main contribution with this project is a fast and parallel method of constructing SDF geometry on the GPU, so most of this section will be spent describing the construction algorithm. The key building block of my SDF geometry is 'bricks' (terminology borrowed from *Dreams*), which is an AABB that encapsulates 8x8x8 distance values.
 The pipeline for constructing SDF geometry in my project looks like this:
 
 - **Create an 'edit' list.** This is the recipe of the object, consisting of a list of primitive shapes ('edits') and operations to combine them together (union, subtraction, etc).
