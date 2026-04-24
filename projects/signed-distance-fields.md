@@ -80,14 +80,28 @@ The pipeline for constructing SDF geometry in my project looks like this:
 - **Distance field evaluation.** Once all of the bricks have been identified, they each need to be filled with distance field data. This distance field data is then later rendered using a combination of hardware-accelerated raytracing and software sphere-tracing.
 
 Once SDF geometry is constructed, I make use of the hardware-accelerated DirectX Raytracing API to render it. The rendering pipeline looks like this:
-- **Build BVH.** A bounding-volume hierarchy is built around the leaf nodes of the brick tree.
-- **Ray-Brick Intersection** The hardware-accelerated raytracing API performs Ray-AABB intersection testing.
+{% call layout.twoColumnLayout("/images/raytracing.png", "Ray-tracing is used for rendering, with SDF geometry on left and the brick bounding boxes on the right.", true) %}
+
+- **Build BVH.** A bounding-volume hierarchy is built around the leaf nodes of the brick tree before rendering begins.
+- **Ray-Brick Intersection.** The hardware-accelerated raytracing API performs Ray-AABB intersection testing.
 - **Sphere-tracing within bricks.** When a ray intersects a brick, sphere-tracing is used to move from the brick boundary to the contained surface.
 - **Shading.** Once an intersection has been determined, shading can proceed as normal.
 
-{% call layout.twoColumnLayout("/images/raytracing.png", "Ray-tracing is used for rendering, with SDF geometry on left and the brick bounding boxes on the right.", true) %}
+{% endcall %}
 
-This two-level rendering process, using hardware-accelerated raytracing to find ray-AABB intersections followed by sphere-tracing to find intersections with the SDF surface, proved to be very scalable and support hundreds of thousands of bricks.
+This two-level rendering process, using hardware-accelerated raytracing to find ray-AABB intersections followed by sphere-tracing to find intersections with the SDF surface, proved to be very scalable and support hundreds of thousands of bricks. 
+
+This is demonstrated in the table and graph below, where the same object was constructed from 4,000-400,000 bricks. It can be seen that rendering latency does not significantly increase as the number of bricks increases (data collected on an NVIDIA 5090).
+
+
+{% call layout.twoColumnLayout("/images/sdfRenderingPerformance.png", "Rendering performance for a number of different brick sizes (and consequently brick counts).", true) %}
+
+Brick Count | Rendering Time (ms)
+-|-
+4,042|0.78
+19,090|0.72
+79,222|0.69
+362,825|0.79
 
 {% endcall %}
 
@@ -100,7 +114,7 @@ The first challenge to building SDF geometry is to decide where to evaluate the 
 
 {% call layout.twoColumnLayout("/images/brickPool.png", "A slice from the brick pool, with magnified excerpt on the right. The boundaries of bricks can be identified clearly.") %}
 
-A sparse representation of the distance field improves scalability. We place bricks in regions of space that contain any surface (i.e., a region of space which contains both positive and negative distance values), and each brick will point to some region of a 'brick atlas' which stores the distance values for the entire object in a compact manner. The challenge lies in determining where these regions of space that contain a surface lie. The method I went with was a hierarchical refinement of space to narrow-in on regions of space that contain a surface.
+A sparse representation of the distance field improves scalability. We place bricks in regions of space that contain any surface (i.e., a region of space which contains both positive and negative distance values), and each brick will point to some region of a 'brick atlas' (as shown to the left) which stores the distance values for the entire object in a compact manner. The challenge lies in determining where these regions of space that contain a surface lie. The method I went with was a hierarchical refinement of space to narrow-in on regions of space that contain a surface.
 
 {% endcall %}
 
@@ -125,7 +139,7 @@ The introduction of 'smooth blending' operations, which is one of the most satis
 
 This requires an analysis of what I called 'edit dependencies'. This is the identification of which edits are influenced by preceding edits in the list, and ensure that an edit is only culled if all of its dependencies are also able to be culled.
 
-With an understanding of the dependencies established as a pre-pass to construction (because the edit list does not change throughout construction), edit culling is refined iteratively throughout hierarchical brick construction. This is achieved by refining 'index buffers' for each brick, which maintains a list of only the relevant edits for each brick. This introduces a memory overhead to store these index buffers, but dramatically accelerates distance field evaluation - especially as scenes scale in number of bricks and/or edits.
+With an understanding of the dependencies established, edit culling is refined iteratively throughout hierarchical brick construction. This is achieved by refining 'index buffers' for each brick, which maintains a list of only the relevant edits for each brick. This introduces a memory overhead to store these index buffers, but dramatically accelerates distance field evaluation - especially as scenes scale in number of bricks and/or edits.
 
 ![](/images/editCount.png)
 <div class="image-caption">
