@@ -12,6 +12,8 @@ tags:
     - Raytracing
 ---
 
+{% import "two-column-layout.njk" as layout %}
+
 <!--
 TODO:
 - Add banner image.
@@ -26,6 +28,8 @@ TODO:
 
 {% set tagslist %}{% include "tags.njk" %}{% endset %}
 {{ tagslist | safe }}
+
+![](/images/sdf_banner.png)
 
 This project was developed over a period of 6 months to fulfill my honours degree at Abertay University. This page provides a blog-style description of the project, but you can also [read my full dissertation](/resources/Dissertation.pdf).
 
@@ -81,20 +85,24 @@ Once SDF geometry is constructed, I make use of the hardware-accelerated DirectX
 - **Sphere-tracing within bricks.** When a ray intersects a brick, sphere-tracing is used to move from the brick boundary to the contained surface.
 - **Shading.** Once an intersection has been determined, shading can proceed as normal.
 
+{% call layout.twoColumnLayout("/images/raytracing.png", "Ray-tracing is used for rendering, with SDF geometry on left and the brick bounding boxes on the right.", true) %}
+
 This two-level rendering process, using hardware-accelerated raytracing to find ray-AABB intersections followed by sphere-tracing to find intersections with the SDF surface, proved to be very scalable and support hundreds of thousands of bricks.
 
-<!-- INSERT GRAPH OF RENDER TIME VS BRICK COUNT to demonstrate scalability -->
+{% endcall %}
 
-![](/images/raytracing.png)
+<!-- INSERT GRAPH OF RENDER TIME VS BRICK COUNT to demonstrate scalability -->
 
 
 ### Constructing Bricks
 
-The first challenge to building SDF geometry is to decide where to evaluate the distance field. Clearly I cannot evaluate every point in space, especially not in real-time. Plus, the memory requirements to store distance values at all points would severely limit the region of space that geometry could exist in. This is evident in *[Claybook](LINK)*, which used a dense distance field with a maximum resolution of 1024x512x1024 and consequently gameplay is constrained to a small region of space.
+The first challenge to building SDF geometry is to decide where to evaluate the distance field. Clearly I cannot evaluate every point in space, especially not in real-time. Plus, the memory requirements to store distance values at all points would severely limit the region of space that geometry could exist in. This is evident in *[Claybook](https://claybookgame.com/)*, which used a dense distance field with a maximum resolution of 1024x512x1024 and consequently gameplay is constrained to a small region of space.
+
+{% call layout.twoColumnLayout("/images/brickPool.png", "A slice from the brick pool, with magnified excerpt on the right. The boundaries of bricks can be identified clearly.") %}
 
 A sparse representation of the distance field improves scalability. We place bricks in regions of space that contain any surface (i.e., a region of space which contains both positive and negative distance values), and each brick will point to some region of a 'brick atlas' which stores the distance values for the entire object in a compact manner. The challenge lies in determining where these regions of space that contain a surface lie. The method I went with was a hierarchical refinement of space to narrow-in on regions of space that contain a surface.
 
-![](/images/brickPool.png)
+{% endcall %}
 
 In this hierarchical process, if a brick contains a surface, it will split into 64 sub-bricks in the next iteration, with one-quarter the side length. This method is well suited for the GPU for a bunch of reasons:
 - One compute shader group can operate on each brick, with one thread executing per candidate sub-brick. These threads can co-operate with loading edits into group-shared memory to reduce the VRAM bandwidth consumed.
@@ -120,6 +128,9 @@ This requires an analysis of what I called 'edit dependencies'. This is the iden
 With an understanding of the dependencies established as a pre-pass to construction (because the edit list does not change throughout construction), edit culling is refined iteratively throughout hierarchical brick construction. This is achieved by refining 'index buffers' for each brick, which maintains a list of only the relevant edits for each brick. This introduces a memory overhead to store these index buffers, but dramatically accelerates distance field evaluation - especially as scenes scale in number of bricks and/or edits.
 
 ![](/images/editCount.png)
+<div class="image-caption">
+Heatmap showing number of SDF evaluations with different amounts of smooth blending. It can be seen smooth blending dramatically increases the number of SDF overlaps, diminishing the effects of edit culling.
+</div>
 
 <!-- INSERT DATA COMPARING WITH / WITHOUT EDIT CULLING TO SHOW PERFORMANCE IMPROVEMENT -->
 

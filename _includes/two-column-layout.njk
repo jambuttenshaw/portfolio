@@ -1,0 +1,43 @@
+{% macro twoColumnLayout(imageUrl, imageAlt, textLeft) %}
+<style>
+  .two-column-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .two-column-layout.image-left > :first-child {
+    order: 2;
+  }
+
+  .two-column-layout.image-left > :last-child {
+    order: 1;
+  }
+
+  .two-column-layout img {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .two-column-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .two-column-layout.image-left > :first-child,
+    .two-column-layout.image-left > :last-child {
+      order: auto;
+    }
+  }
+</style>
+<div class="two-column-layout {% if not textLeft %}image-left{% endif %}">
+  <div>
+    {{ caller() }}
+  </div>
+  <div>
+    <img src="{{ imageUrl }}" alt="{{ imageAlt or 'Image' }}" style="width: 100%; height: auto;">
+    <div class="image-caption">{{ imageAlt or 'Image' }}</div>
+  </div>
+</div>
+{% endmacro %}
