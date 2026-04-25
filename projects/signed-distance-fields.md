@@ -70,17 +70,18 @@ For my project, I also needed a structure that could be constructed quickly. To 
 
 ## Implementation
 
-My main contribution with this project is a fast and parallel method of constructing SDF geometry on the GPU, so most of this section will be spent describing the construction algorithm. The key building block of my SDF geometry is 'bricks' (terminology borrowed from *Dreams*), which is an AABB that encapsulates 8x8x8 distance values.
+My main contribution with this project is a fast and parallel method of constructing SDF geometry on the GPU. The key building block of my SDF geometry is 'bricks' (terminology borrowed from *Dreams*), which is an AABB that encapsulates 8x8x8 distance values.
 The pipeline for constructing SDF geometry in my project looks like this:
 
 - **Create an 'edit' list.** This is the recipe of the object, consisting of a list of primitive shapes ('edits') and operations to combine them together (union, subtraction, etc).
-- **Edit dependency analysis.** This is a pre-process step to enable edit culling by working out how edits affect one another.
-- **Hierarchical brick construction.** A tree of bricks is created in an iterative process, quartering in size with each level to converge around the geometry surface. The number of iterations performed determines the resulting size of the bricks (and consequently the resolution of the geometry).
+- **Edit dependency analysis.** This is a pre-process step to enable edit culling by creating a table that describes which edits affect one another.
+- **Hierarchical brick construction.** A tree of bricks is created in an iterative process, quartering in size with each level to converge around the geometry surface. The wide-and-shallow tree is able to saturate the GPU with enough bricks to process faster than, for example, an octree.
 - **Edit culling.** This is the key optimization to enable real-time construction, by only evaluating the signed distance functions that will definitely influence the distance field values.
 - **Distance field evaluation.** Once all of the bricks have been identified, they each need to be filled with distance field data. This distance field data is then later rendered using a combination of hardware-accelerated raytracing and software sphere-tracing.
 
 Once SDF geometry is constructed, I make use of the hardware-accelerated DirectX Raytracing API to render it. The rendering pipeline looks like this:
-{% call layout.twoColumnLayout("/images/raytracing.png", "Ray-tracing is used for rendering, with SDF geometry on left and the brick bounding boxes on the right.", true) %}
+
+{% call layout.twoColumnLayout("/images/raytracing.png", "Ray-tracing is used for rendering. The SDF geometry is shown on left and the bounding boxes in the acceleration structure are on the right.", true) %}
 
 - **Build BVH.** A bounding-volume hierarchy is built around the leaf nodes of the brick tree before rendering begins.
 - **Ray-Brick Intersection.** The hardware-accelerated raytracing API performs Ray-AABB intersection testing.
@@ -91,12 +92,16 @@ Once SDF geometry is constructed, I make use of the hardware-accelerated DirectX
 
 This two-level rendering process, using hardware-accelerated raytracing to find ray-AABB intersections followed by sphere-tracing to find intersections with the SDF surface, proved to be very scalable and support hundreds of thousands of bricks. 
 
-This is demonstrated in the table and graph below, where the same object was constructed from 4,000-400,000 bricks. It can be seen that rendering latency does not significantly increase as the number of bricks increases (data collected on an NVIDIA 5090).
+![](/images/sdfScene.png)
+<div class="image-caption">
+The test scene used to gather data. It's made up of 1024 primitive 'edits', with lots of smooth blending and overlapping edits.
+</div>
 
+The scene shown above was constructed from 4,000 - 400,000 bricks and rendered without lighting to only measure ray-surface intersections. It can be seen that rendering latency does not significantly increase as the number of bricks increases (data collected on an NVIDIA 5090).
 
-{% call layout.twoColumnLayout("/images/sdfRenderingPerformance.png", "Rendering performance for a number of different brick sizes (and consequently brick counts).", true) %}
+{% call layout.twoColumnLayout("/images/sdfRenderingPerformance.png", "Rendering performance for a number of different brick counts. Rendering time is not closely related to the number of bricks.", true) %}
 
-Brick Count | Rendering Time (ms)
+Brick Count | Raytracing (ms)
 -|-
 4,042|0.78
 19,090|0.72
@@ -105,31 +110,46 @@ Brick Count | Rendering Time (ms)
 
 {% endcall %}
 
-<!-- INSERT GRAPH OF RENDER TIME VS BRICK COUNT to demonstrate scalability -->
-
-
 ### Constructing Bricks
 
-The first challenge to building SDF geometry is to decide where to evaluate the distance field. Clearly I cannot evaluate every point in space, especially not in real-time. Plus, the memory requirements to store distance values at all points would severely limit the region of space that geometry could exist in. This is evident in *[Claybook](https://claybookgame.com/)*, which used a dense distance field with a maximum resolution of 1024x512x1024 and consequently gameplay is constrained to a small region of space.
+*[Claybook](https://claybookgame.com/)*, which used a dense distance field, constrains gameplay to a defined region of space to bound memory consumption. However, I wanted to avoid this and to allow geometry to exist anywhere. However, clearly I cannot evaluate every point in space due to bounded space and time requirements.
 
 {% call layout.twoColumnLayout("/images/brickPool.png", "A slice from the brick pool, with magnified excerpt on the right. The boundaries of bricks can be identified clearly.") %}
 
-A sparse representation of the distance field improves scalability. We place bricks in regions of space that contain any surface (i.e., a region of space which contains both positive and negative distance values), and each brick will point to some region of a 'brick atlas' (as shown to the left) which stores the distance values for the entire object in a compact manner. The challenge lies in determining where these regions of space that contain a surface lie. The method I went with was a hierarchical refinement of space to narrow-in on regions of space that contain a surface.
+This can be handled with a sparse representation of the distance field. Bricks are only placed in regions of space that contain any surface. 
+
+Each brick owns some region of a 'brick atlas' (as shown to the left), where all distance values for the entire object in a compact manner. The challenge lies in determining where these regions of space that contain a surface lie. The method I went with was a hierarchical refinement of space to narrow-in on regions of space that contain a surface.
 
 {% endcall %}
 
 In this hierarchical process, if a brick contains a surface, it will split into 64 sub-bricks in the next iteration, with one-quarter the side length. This method is well suited for the GPU for a bunch of reasons:
-- One compute shader group can operate on each brick, with one thread executing per candidate sub-brick. These threads can co-operate with loading edits into group-shared memory to reduce the VRAM bandwidth consumed.
+- One compute shader group operates on each brick, with one thread executing per candidate sub-brick. These threads can co-operate with loading edits into group-shared memory to reduce the VRAM bandwidth consumed.
 - A prefix-sum is performed to calculate indices to place the sub-bricks. Only the sums of sub-bricks-per-brick need to scanned, which significantly reduces the amount of data to operate on. Scanning allows a compact buffer to be maintained, improving cache usage when loading bricks from VRAM in later stages.
 - Sub-bricks are sorted by Morton codes calculated from their positions before inserting them into the buffer. This ensures that bricks nearby in space are located nearby in the buffer, which reduces cache thrashing due to incoherent data.
 - A consequence of the hierarchical process is that sorting bricks within each group before placing them in the buffer is enough to guarantee that the entire buffer is sorted at the end of the construction process. You can understand this by considering how the most significant bits of the Morton codes do not change with proceeding iterations.
 - D3D12's indirect execution model can be utilized for the GPU to feed itself work for each subsequent iteration. The total number of iterations can be calculated on the CPU ahead of time by deciding on an initial and minimum brick size.
 
 ![](/images/hierarchical.png)
+<div class="image-caption">
+3 iterations of brick-building. Bricks quarter in size with each iteration, and only bricks that contain some surface are subdivided.
+</div>
 
 Once all bricks are placed, we know exactly where to evaluate the distance field. Each brick contains 8x8x8 distance values, and each of these can be calculated by iterating through the edit list and evaluating each edit in turn at the current point in space. One compute shader group operates per brick, so the threads can co-operate in loading edits into group-shared memory to reduce memory bandwidth.
 
-In the early iterations of hierarchical brick construction the GPU suffers from low occupancy due to the small workloads. Only after a few iterations are enough bricks spawned to keep the GPU fully fed. However, building the tree of bricks is blazingly fast compared to evaluating the distance field they encompass, so it was much more worthwhile to optimize the distance field evaluation. This was done by introducing *edit culling*...
+The table and graph below shows times for brick construction and SDF evaluation for the same scene as before, made up of 1024 primitive edits and constructed at various resolutions (data collected on an NVIDIA 5090).
+
+{% call layout.twoColumnLayout("/images/sdfConstructionPerformance_noEditCulling.png", "Construction time as brick count increases. Construction time increases linearly with amount of geometry in the scene.", true) %}
+
+Brick Count | Brick Building (ms) | SDF Evaluation (ms)
+-|-|-
+4,100|0.79|5.63
+19,565|0.87|25.97
+82,501|1.95|108.67
+377,101|5.05|496.16
+
+{% endcall %}
+
+In the early iterations of hierarchical brick construction the GPU suffers from low throughput due to the small workloads, but this alleviates after ~2 iterations. However, SDF evaluation was a huge bottleneck, especially on a scene with lots of overlapping edits. To tackle this, I introduced *edit culling*...
 
 ### Edit Culling
 
@@ -137,16 +157,27 @@ The obvious optimization is to realize the collection of bricks only represent a
 
 The introduction of 'smooth blending' operations, which is one of the most satisfying features of SDF geometry, means that the influence of edits extends beyond the geometric bounds of the primitive shape itself. Additionally, edits within the edit list will influence other edits that appear later in the list.
 
-This requires an analysis of what I called 'edit dependencies'. This is the identification of which edits are influenced by preceding edits in the list, and ensure that an edit is only culled if all of its dependencies are also able to be culled.
-
-With an understanding of the dependencies established, edit culling is refined iteratively throughout hierarchical brick construction. This is achieved by refining 'index buffers' for each brick, which maintains a list of only the relevant edits for each brick. This introduces a memory overhead to store these index buffers, but dramatically accelerates distance field evaluation - especially as scenes scale in number of bricks and/or edits.
+This requires an analysis of9 'edit dependencies'. This is the identification of which edits are influenced by preceding edits in the list, and ensure that an edit is only culled if all of its dependencies are also able to be culled. Smooth blending dramatically increases the number of dependencies between edits.
 
 ![](/images/editCount.png)
 <div class="image-caption">
 Heatmap showing number of SDF evaluations with different amounts of smooth blending. It can be seen smooth blending dramatically increases the number of SDF overlaps, diminishing the effects of edit culling.
 </div>
 
-<!-- INSERT DATA COMPARING WITH / WITHOUT EDIT CULLING TO SHOW PERFORMANCE IMPROVEMENT -->
+With an understanding of the dependencies established, edit culling is refined iteratively throughout hierarchical brick construction. This is achieved by refining 'index buffers' for each brick, which maintains a list of only the relevant edits for each brick. This introduces a memory overhead to store these index buffers, but dramatically accelerates distance field evaluation - especially as scenes scale in number of bricks and/or edits.
+
+{% call layout.twoColumnLayout("/images/sdfConstructionPerformance_editCulling.png", "Construction time as brick count increases, with edit culling enabled. Construction still time increases linearly, but is orders of magnitude faster.", true) %}
+
+Brick Count | Brick Building (ms) | SDF Evaluation (ms)
+-|-|-
+4,042|0.67|0.27
+19,087|0.63|0.94
+79,250|0.94|3.45
+362,830|1.49|13.69
+
+{% endcall %}
+
+With edit culling enabled, the reduction in both brick building time and SDF evaluation is stark; orders of magnitude faster. It is particularly effective in this scene, with a very large number of edits.
 
 ## Conclusions
 
@@ -160,6 +191,14 @@ If I were to develop this further, I would be interested in investigating the fo
 
 ## Videos
 
-Check out additional video content about this project:
+<div style="text-align: center; max-width: 100%;">
+<iframe style="max-width: 100%; width: 560px; height: 315px;" src="https://www.youtube.com/embed/VDC3vSBE-bk?si=vU4Q2uK1TUJ2l_Qv" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
 
-## References
+<div style="text-align: center; max-width: 100%;">
+<iframe style="max-width: 100%; width: 560px; height: 315px;" src="https://www.youtube.com/embed/Y6qnGLtWf10?si=ky5dLlUyM_ICXBat" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+
+<div style="text-align: center; max-width: 100%;">
+<iframe style="max-width: 100%; width: 560px; height: 315px;" src="https://www.youtube.com/embed/y6Reo1VShN4?si=devMG3fKIigO5Aq5" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>

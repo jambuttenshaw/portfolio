@@ -9,7 +9,7 @@
 
 body {
   font-family: var(--font-primary);
-  line-height: 1.6;
+  line-height: 1.8;
   color: var(--color-text-primary);
   background-color: var(--color-bg-primary);
   min-height: 100vh;
@@ -127,12 +127,14 @@ main h1:hover::after, main h2:hover::after {
 }
 
 p {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.8;
 }
 
 ul {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   padding-left: 2rem;
+  line-height: 1.8;
 }
 
 a {
@@ -181,8 +183,9 @@ table {
 }
 
 th, td {
-  padding: 0.6rem;
+  padding: 0.8rem;
   text-align: left;
+  line-height: 1.6;
 }
 
 th {
@@ -261,7 +264,7 @@ td img:hover {
   gap: 8px;
   margin: 12px 0;
   justify-content: center;
-  line-height: 1.2;
+  line-height: 1.5;
 }
 
 .tag {

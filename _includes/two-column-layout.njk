@@ -7,6 +7,11 @@
     align-items: start;
   }
 
+  .two-column-layout > div {
+    display: flex;
+    flex-direction: column;
+  }
+
   .two-column-layout.image-left > :first-child {
     order: 2;
   }
@@ -18,6 +23,8 @@
   .two-column-layout img {
     display: block;
     margin-bottom: 0.5rem;
+    width: 100%;
+    height: auto;
   }
 
   @media (max-width: 768px) {
