@@ -210,7 +210,6 @@ td img:hover {
 
 .image-caption {
   font-size: 0.9rem;
-  font-style: italic;
   color: var(--color-text-primary);
   opacity: 0.8;
   padding-bottom: 1.0rem;

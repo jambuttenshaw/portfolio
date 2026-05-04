@@ -44,7 +44,7 @@
   </div>
   <div>
     <img src="{{ imageUrl }}" alt="{{ imageAlt or 'Image' }}" style="width: 100%; height: auto;">
-    <div class="image-caption">{{ imageAlt or 'Image' }}</div>
+    <div class="image-caption">{% markdownInline imageAlt or 'Image' %}</div>
   </div>
 </div>
 {% endmacro %}
