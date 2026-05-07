@@ -60,9 +60,9 @@ My role bridges the gap between academia and industry, developing the cutting ed
 **Abertay University**<br>
 *June 2023 - December 2023*
 
-As a research assistant I developed a multiplayer XR sanbox for Meta Quest Pro using Unreal Engine 5 and C++. This involved plugin development, as well as native OpenXR and cross-platform multiplayer development.
+As a research assistant I developed a multiplayer XR sanbox for Meta Quest Pro using Unreal Engine 5 and C++. This involved developing plugin, native OpenXR development, and cross-platform multiplayer programming.
 
-As a teaching assistant I helped teach graphics programming with shaders in Direct3D 11 to 3rd year students, explaining foundational graphics pipeline and GPU programming knowledge.
+As a teaching assistant I helped teach graphics programming with shaders in Direct3D 11 to 3rd year undergraduate students, explaining foundational graphics pipeline and GPU programming knowledge.
 
 </div>
 
@@ -73,8 +73,6 @@ As a teaching assistant I helped teach graphics programming with shaders in Dire
 ### BSc(Hons) Computer Games Technology
 **Abertay University**<br>
 *2020 - 2024*
-
-I specialised in graphics and engine programming, working directly with low-level graphics APIs to build performant systems, with a personal interest in advancing my C++ knowledge to use modern concepts to create elegant, modular, and maintanable code.
 
 For excellence in my studies, I have been awarded:
 - **TIGA Graduate of the Year** - Programming (2024)
