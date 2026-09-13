@@ -55,6 +55,9 @@ nav h1 {
 nav ul {
   display: flex;
   list-style: none;
+  /* Optical centring: against the large brand the right-hand group reads
+     slightly high, so nudge it down to sit perceptibly centred */
+  transform: translateY(3px);
 }
 
 nav ul li {
@@ -110,6 +113,40 @@ nav ul a:focus:not(:focus-visible) {
 
 nav ul a:focus-visible {
   outline: none;
+}
+
+/* Theme toggle button */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem 0.55rem;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: var(--color-nav-text);
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.theme-toggle .fa {
+  font-size: 1.1rem;
+  transition: transform 0.2s ease;
+}
+
+.theme-toggle:hover {
+  color: var(--color-nav-accent);
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+.theme-toggle:active .fa {
+  transform: scale(0.9);
+}
+
+.theme-toggle:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-nav-accent);
 }
 
 main {
