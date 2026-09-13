@@ -21,6 +21,10 @@
   --color-accent-primary: #2FBADC;
   --color-accent-secondary: #DFF2D8;
   
+  /* Colors - Nav (sage header needs dark text + deep-green accent in both themes) */
+  --color-nav-text: #1a1a1a;
+  --color-nav-accent: #1d4a2b;
+  
   /* Colors - Borders & Dividers */
   --color-border: #606060;
   
@@ -53,6 +57,10 @@
     /* Colors - Accent */
     --color-accent-primary: #0099cc;
     --color-accent-secondary: #2d6a3e;
+    
+    /* Colors - Nav */
+    --color-nav-text: #1a1a1a;
+    --color-nav-accent: #1d4a2b;
     
     /* Colors - Borders & Dividers */
     --color-border: #cccccc;

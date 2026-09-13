@@ -62,9 +62,21 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // Add active class to current page navigation
+  // (prefix-match so /projects/ stays active on /projects/<slug>/ pages)
   const currentPath = window.location.pathname;
   navLinks.forEach(link => {
-    if (link.getAttribute('href') === currentPath) {
+    const href = link.getAttribute('href') || '';
+    if (href.startsWith('#')) {
+      return;
+    }
+    if (href === '/') {
+      if (currentPath === '/' || currentPath === '/index.html') {
+        link.classList.add('active');
+      }
+      return;
+    }
+    const base = href.replace(/\/+$/, '');
+    if (base && (currentPath === base + '/' || currentPath.startsWith(base + '/'))) {
       link.classList.add('active');
     }
   });

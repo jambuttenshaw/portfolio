@@ -35,16 +35,16 @@ nav {
 
 nav h1 {
   font-size: 2.3rem;
-  color: var(--color-text-secondary);
+  color: var(--color-nav-text);
 }
 
 .nav-brand {
   text-decoration: none;
-  color: var(--color-text-secondary);
+  color: var(--color-nav-text);
 }
 
 .nav-brand:hover {
-  color: var(--color-text-secondary);
+  color: var(--color-nav-text);
   text-decoration: none;
 }
 
@@ -61,14 +61,55 @@ nav ul li {
   margin-left: 2rem;
 }
 
-nav a {
-  color: var(--color-text-secondary);
+nav ul a {
+  position: relative;
+  display: inline-block;
+  padding: 0.25rem 0.15rem;
+  color: var(--color-nav-text);
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: 0.01em;
   text-decoration: none;
-  transition: color 0.3s;
+  transition: color 0.2s ease;
 }
 
-nav a:hover {
-  color: var(--color-accent-secondary);
+/* Animated underline, echoing the gradient-underline motif on main headings */
+nav ul a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--color-nav-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+
+nav ul a:hover,
+nav ul a:focus-visible {
+  color: var(--color-nav-text);
+  text-decoration: none;
+}
+
+nav ul a:hover::after,
+nav ul a:focus-visible::after,
+nav ul a.active::after {
+  transform: scaleX(1);
+}
+
+nav ul a.active {
+  font-weight: 700;
+}
+
+/* Underline is the keyboard focus indicator; drop the default ring on mouse focus only */
+nav ul a:focus:not(:focus-visible) {
+  outline: none;
+}
+
+nav ul a:focus-visible {
+  outline: none;
 }
 
 main {
@@ -229,7 +270,7 @@ td img:hover {
     font-size: 1.3rem;
   }
 
-  nav ul li {
+  nav ul a {
     font-size: 0.9rem;
   }
 
