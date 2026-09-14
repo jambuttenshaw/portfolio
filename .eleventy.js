@@ -15,8 +15,25 @@ export default function(eleventyConfig) {
     return collectionApi.getFilteredByGlob("projects/*.md");
   });
 
+  // Blog posts, newest first (requires a `date` field in the front matter)
+  eleventyConfig.addCollection("blog", function(collectionApi) {
+    return collectionApi
+      .getFilteredByGlob("blog/*.md")
+      .sort((a, b) => b.data.date - a.data.date);
+  });
+
   // Set current year
   eleventyConfig.addFilter("year", () => new Date().getFullYear());
+
+  // Format a date as e.g. "15 July 2026"
+  eleventyConfig.addFilter("formatDate", (date) => {
+    if (!date) return "";
+    return new Date(date).toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+  });
 
   // Markdown filter for inline markdown
   eleventyConfig.addNunjucksFilter("markdown", (str) => {
