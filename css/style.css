@@ -289,8 +289,23 @@ th {
   color: var(--color-text-primary);
 }
 
-.projects-table tr:hover {
+.projects-table tr:hover,
+.blog-table tr:hover {
   background-color: var(--color-bg-tertiary);
+}
+
+/* Blog table: keep the date column on one line */
+.blog-table .date-column {
+  white-space: nowrap;
+}
+
+/* Blog post: "Published on ..." line under the title */
+.post-meta {
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  opacity: 0.8;
+  margin-bottom: 1.5rem;
 }
 
 td img {
