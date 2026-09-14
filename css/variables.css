@@ -11,7 +11,7 @@
   --color-bg-primary: #1a1a1a;
   --color-bg-secondary: #2d2d2d;
   --color-bg-tertiary: #3a3a3a;
-  --color-bg-header-footer: #839788;
+  --color-bg-header-footer: #bee1d4;
   
   /* Colors - Text */
   --color-text-primary: #e0e0e0;
@@ -24,6 +24,10 @@
   /* Colors - Nav (sage header needs dark text + deep-green accent in both themes) */
   --color-nav-text: #1a1a1a;
   --color-nav-accent: #1d4a2b;
+  
+  /* Colors - GitHub link (near-black for contrast against the pale sage button) */
+  --color-github-text: #1a1a1a;
+  --color-github-icon: #1a1a1a;
   
   /* Colors - Borders & Dividers */
   --color-border: #606060;
@@ -62,6 +66,10 @@
     --color-nav-text: #1a1a1a;
     --color-nav-accent: #1d4a2b;
     
+    /* Colors - GitHub link (mirrors the pre-existing light theme values) */
+    --color-github-text: var(--color-text-secondary);
+    --color-github-icon: var(--color-text-primary);
+    
     /* Colors - Borders & Dividers */
     --color-border: #cccccc;
     
@@ -98,6 +106,10 @@
   /* Colors - Nav */
   --color-nav-text: #1a1a1a;
   --color-nav-accent: #1d4a2b;
+  
+  /* Colors - GitHub link (mirrors the pre-existing light theme values) */
+  --color-github-text: var(--color-text-secondary);
+  --color-github-icon: var(--color-text-primary);
   
   /* Colors - Borders & Dividers */
   --color-border: #cccccc;

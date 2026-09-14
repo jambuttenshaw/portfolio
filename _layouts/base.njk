@@ -5,6 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="color-scheme" content="light dark">
   <title>{% if title %}{{ title }} | {% endif %}Jamie Buttenshaw</title>
+  <script>
+    // Apply the saved theme (or the OS preference on first visit) before the
+    // first paint, so navigating between pages never flashes the wrong theme.
+    (function () {
+      try {
+        var saved = window.localStorage.getItem('portfolio-theme');
+        var theme = (saved === 'light' || saved === 'dark')
+          ? saved
+          : (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        var root = document.documentElement;
+        root.setAttribute('data-theme', theme);
+        root.style.colorScheme = theme;
+      } catch (e) {
+        // localStorage unavailable: CSS dark default applies, main.js follows up
+      }
+    })();
+  </script>
   <link rel="stylesheet" href="/css/font-awesome.min.css">
   <link rel="stylesheet" href="/css/style.css">
 </head>

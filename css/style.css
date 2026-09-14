@@ -57,7 +57,7 @@ nav ul {
   list-style: none;
   /* Optical centring: against the large brand the right-hand group reads
      slightly high, so nudge it down to sit perceptibly centred */
-  transform: translateY(3px);
+  transform: translateY(8px);
 }
 
 nav ul li {
@@ -164,7 +164,7 @@ footer {
   text-align: center;
   padding: 2rem;
   background-color: var(--color-bg-header-footer);
-  color: var(--color-text-secondary);
+  color: var(--color-nav-text);
 }
 
 h1, h2, h3 {
@@ -414,7 +414,7 @@ td img:hover {
 }
 
 .github-link a {
-  color: var(--color-text-secondary);
+  color: var(--color-github-text);
   transition: color 0.3s ease;
   text-decoration: none;
 }
@@ -428,6 +428,7 @@ td img:hover {
 }
 
 .github-link .fa {
+  color: var(--color-github-icon);
   margin-right: 0.5rem;
   transition: transform 0.3s ease;
 }

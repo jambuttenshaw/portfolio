@@ -1,13 +1,33 @@
 // Basic JavaScript for portfolio interactions
 
 // Theme handling
-// The site always initializes to the OS theme. The nav bar toggle flips the
-// theme for the current visit via a data-theme attribute on <html> (which
-// the CSS variables respect), and live OS preference changes are followed.
+// The site initializes to the saved theme if the user has made an explicit
+// choice via the nav bar toggle, otherwise to the OS theme. The toggle's
+// choice is saved (localStorage) so it persists across page navigation, and
+// live OS preference changes are followed until the user makes a choice.
+const THEME_STORAGE_KEY = 'portfolio-theme';
+
 function getSystemTheme() {
   return window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches
     ? 'light'
     : 'dark';
+}
+
+function getSavedTheme() {
+  try {
+    const saved = window.localStorage.getItem(THEME_STORAGE_KEY);
+    return saved === 'light' || saved === 'dark' ? saved : null;
+  } catch (e) {
+    return null; // localStorage unavailable (e.g. private mode): no persistence
+  }
+}
+
+function saveTheme(theme) {
+  try {
+    window.localStorage.setItem(THEME_STORAGE_KEY, theme);
+  } catch (e) {
+    // Persistence unavailable: theme still applies for the current visit
+  }
 }
 
 function applyTheme(theme) {
@@ -35,13 +55,15 @@ function updateThemeToggle(theme) {
 }
 
 function initializeTheme() {
-  // Initialize from the OS preference
-  applyTheme(getSystemTheme());
+  // Use the saved choice if the user made one, otherwise follow the OS
+  applyTheme(getSavedTheme() || getSystemTheme());
 
-  // Follow live OS preference changes
+  // Follow live OS preference changes until the user makes an explicit choice
   if (window.matchMedia) {
     window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
-      applyTheme(e.matches ? 'light' : 'dark');
+      if (!getSavedTheme()) {
+        applyTheme(e.matches ? 'light' : 'dark');
+      }
     });
   }
 }
@@ -55,7 +77,9 @@ document.addEventListener('DOMContentLoaded', function() {
   if (themeToggle) {
     themeToggle.addEventListener('click', () => {
       const current = document.documentElement.getAttribute('data-theme') || getSystemTheme();
-      applyTheme(current === 'light' ? 'dark' : 'light');
+      const next = current === 'light' ? 'dark' : 'light';
+      applyTheme(next);
+      saveTheme(next);
     });
   }
 
