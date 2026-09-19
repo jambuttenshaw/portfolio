@@ -17,11 +17,13 @@ portfolio/
 ├── _includes/          # Reusable template parts
 ├── _layouts/           # Page layouts (base.njk)
 ├── _site/             # Generated static site (don't edit)
+├── blog/              # Individual blog post markdown files
 ├── css/               # Stylesheets
 ├── js/                # JavaScript files
 ├── projects/          # Individual project markdown files
 ├── index.njk          # Home page (auto-lists projects)
 ├── about.md           # About page
+├── blog.md            # Blog overview page (lists all posts by date)
 ├── projects.njk       # Projects overview page
 ├── contact.md         # Contact page
 ├── .eleventy.js       # Eleventy configuration
@@ -113,6 +115,26 @@ featured: true
 ```
 
 The `image` field should point to a preview image in the `images/` folder. The project will automatically appear in the table on both the homepage and projects page.
+
+### Adding New Blog Posts
+
+Create a new `.md` file in the `blog/` folder with the following front matter:
+
+```yaml
+---
+layout: blog-post.njk
+title: Your Post Title
+description: Brief post description
+date: YYYY-MM-DD
+tags:
+    - Tag1
+    - Tag2
+---
+```
+
+The post will automatically appear in the table on the blog page (`/blog`), ordered by date with the newest first. The `title` and `description` are shown in the table row, and the `date` determines the post's position.
+
+Posts use the `blog-post.njk` layout, which displays the title, the "Published on" date line, and the tags (if any) at the top of the post automatically - the body of the post file can start straight from the content. A post can be hidden from the list with `hidden: true`.
 
 ### Layouts
 

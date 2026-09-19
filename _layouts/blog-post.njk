@@ -1,0 +1,14 @@
+---
+layout: base.njk
+---
+
+<h1>{{ title }}</h1>
+
+<p class="post-meta">{{ date | formatDate }}</p>
+
+{% if tags %}
+{% set tagslist %}{% include "tags.njk" %}{% endset %}
+{{ tagslist | safe }}
+{% endif %}
+
+{{ content | safe }}
