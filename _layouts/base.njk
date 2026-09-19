@@ -6,19 +6,21 @@
   <meta name="color-scheme" content="light dark">
   <title>{% if title %}{{ title }} | {% endif %}Jamie Buttenshaw</title>
   <script>
-    // Apply the saved theme (or the OS preference on first visit) before the
+    // Apply the saved theme (or "follow system" on first visit) before the
     // first paint, so navigating between pages never flashes the wrong theme.
+    // 'system' needs no OS sniffing here: the CSS media query and the
+    // color-scheme property resolve it at paint time.
     (function () {
       try {
         var saved = window.localStorage.getItem('portfolio-theme');
-        var theme = (saved === 'light' || saved === 'dark')
+        var state = (saved === 'light' || saved === 'dark' || saved === 'system')
           ? saved
-          : (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+          : 'system';
         var root = document.documentElement;
-        root.setAttribute('data-theme', theme);
-        root.style.colorScheme = theme;
+        root.setAttribute('data-theme', state);
+        root.style.colorScheme = state === 'system' ? 'light dark' : state;
       } catch (e) {
-        // localStorage unavailable: CSS dark default applies, main.js follows up
+        // localStorage unavailable: the CSS default applies, main.js takes over
       }
     })();
   </script>
@@ -33,9 +35,19 @@
         <li><a href="/">Home</a></li>
         <li><a href="/projects/">Projects</a></li>
         <li>
-          <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch theme">
-            <i class="fa fa-moon-o" aria-hidden="true"></i>
-          </button>
+          <!-- Theme selector: one of three options, the selected one highlighted.
+               The static default (system) matches the first-visit state. -->
+          <div id="theme-toggle" class="theme-toggle" role="group" aria-label="Theme">
+            <button class="theme-option" type="button" data-theme-choice="light" aria-pressed="false" aria-label="Light theme">
+              <i class="fa fa-sun-o" aria-hidden="true"></i>
+            </button>
+            <button class="theme-option" type="button" data-theme-choice="dark" aria-pressed="false" aria-label="Dark theme">
+              <i class="fa fa-moon-o" aria-hidden="true"></i>
+            </button>
+            <button class="theme-option selected" type="button" data-theme-choice="system" aria-pressed="true" aria-label="Follow system theme">
+              <i class="fa fa-desktop" aria-hidden="true"></i>
+            </button>
+          </div>
         </li>
       </ul>
     </nav>

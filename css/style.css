@@ -115,12 +115,21 @@ nav ul a:focus-visible {
   outline: none;
 }
 
-/* Theme toggle button */
+/* Theme selector: three options in a row, the selected one highlighted */
 .theme-toggle {
   display: inline-flex;
   align-items: center;
+  gap: 2px;
+  padding: 0.15rem;
+  background-color: rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+}
+
+.theme-option {
+  display: inline-flex;
+  align-items: center;
   justify-content: center;
-  padding: 0.35rem 0.55rem;
+  padding: 0.3rem 0.5rem;
   background: transparent;
   border: none;
   border-radius: 6px;
@@ -130,23 +139,30 @@ nav ul a:focus-visible {
   transition: color 0.2s ease, background-color 0.2s ease;
 }
 
-.theme-toggle .fa {
+.theme-option .fa {
   font-size: 1.1rem;
   transition: transform 0.2s ease;
 }
 
-.theme-toggle:hover {
+.theme-option:hover {
   color: var(--color-nav-accent);
   background-color: rgba(0, 0, 0, 0.08);
 }
 
-.theme-toggle:active .fa {
+.theme-option:active .fa {
   transform: scale(0.9);
 }
 
-.theme-toggle:focus-visible {
+.theme-option:focus-visible {
   outline: none;
   box-shadow: 0 0 0 2px var(--color-nav-accent);
+}
+
+/* Selected option: white pill with the accent-coloured icon and a soft shadow */
+.theme-option.selected {
+  color: var(--color-nav-accent);
+  background-color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
 }
 
 main {

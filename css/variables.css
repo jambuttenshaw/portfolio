@@ -1,12 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 
-/* Color and Font Variables */
+/*
+ * Theme system
+ *
+ * The theme is selected via the data-theme attribute on <html>:
+ *   data-theme='light'   light theme, regardless of OS preference
+ *   data-theme='dark'    dark theme, regardless of OS preference
+ *   data-theme='system'  follow the OS preference
+ *   (no attribute)       follow the OS preference (pre-JS default state)
+ *
+ * The dark palette is the base, so it doubles as the no-JS fallback. The
+ * light palette is applied for the explicit choice and, via the OS media
+ * query, for users following the system while their preference is light.
+ */
 
 :root {
   /* Fonts */
   --font-primary: 'Noto Sans';
   
-  /* Default to Dark Theme */
+  /* Dark theme (base palette, also the pre-JS / no-JS fallback) */
   /* Colors - Background */
   --color-bg-primary: #1a1a1a;
   --color-bg-secondary: #2d2d2d;
@@ -45,7 +57,9 @@
   --color-tag-ue5-border: #F39C5B;
 }
 
-/* Light Theme (follows OS preference unless the toggle forces dark) */
+/* Light theme: following the system while the OS preference is light
+   (matches the no-attribute pre-JS state and data-theme='system';
+   data-theme='light' also matches, redundantly) */
 @media (prefers-color-scheme: light) {
   :root:not([data-theme='dark']) {
     /* Colors - Background */
@@ -87,7 +101,7 @@
   }
 }
 
-/* Explicit light theme (set by the nav bar toggle, overrides OS preference) */
+/* Light theme: explicit choice via the nav bar toggle, overrides OS preference */
 :root[data-theme='light'] {
   /* Colors - Background */
   --color-bg-primary: #ffffff;
