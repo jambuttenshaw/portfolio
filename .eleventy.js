@@ -35,6 +35,15 @@ export default function(eleventyConfig) {
     });
   });
 
+  // Format a date numerically as e.g. "15/07/2026" (DD/MM/YYYY)
+  eleventyConfig.addFilter("formatDateNumeric", (date) => {
+    if (!date) return "";
+    const d = new Date(date);
+    const day = String(d.getDate()).padStart(2, "0");
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    return `${day}/${month}/${d.getFullYear()}`;
+  });
+
   // Markdown filter for inline markdown
   eleventyConfig.addNunjucksFilter("markdown", (str) => {
     if (!str) return '';

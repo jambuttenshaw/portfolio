@@ -3,6 +3,8 @@ layout: blog-post.njk
 title: My First Blog Post
 description: An example post demonstrating the formatting and layout available for blog posts.
 date: 2026-09-14
+tags:
+    - Personal
 ---
 
 {% import "two-column-layout.njk" as layout %}

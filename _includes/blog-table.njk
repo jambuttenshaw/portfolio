@@ -4,6 +4,7 @@
       <tr>
         <th class="date-column">Date</th>
         <th>Post</th>
+        <th class="tags-column">Tags</th>
         <th>Description</th>
       </tr>
     </thead>
@@ -11,8 +12,14 @@
       {% for post in collections.blog %}
       {% if post.data.hidden != true %}
       <tr>
-        <td class="date-column">{{ post.data.date | formatDate }}</td>
+        <td class="date-column">{{ post.data.date | formatDateNumeric }}</td>
         <td><a href="{{ post.url }}">{{ post.data.title }}</a></td>
+        <td class="tags-column">
+          {% if post.data.tags %}
+          {% set tags = post.data.tags %}
+          {% include "tags.njk" %}
+          {% endif %}
+        </td>
         <td>{{ post.data.description }}</td>
       </tr>
       {% endif %}

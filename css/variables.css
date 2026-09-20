@@ -55,6 +55,8 @@
   --color-tag-raytracing-border: #9D6BA8;
   --color-tag-ue5-bg: #F8B88B;
   --color-tag-ue5-border: #F39C5B;
+  --color-tag-personal-bg: #52C41A;
+  --color-tag-personal-border: #40994C;
 }
 
 /* Light theme: following the system while the OS preference is light
@@ -98,6 +100,8 @@
     --color-tag-raytracing-border: #9D6BA8;
     --color-tag-ue5-bg: #ffe0cc;
     --color-tag-ue5-border: #F39C5B;
+    --color-tag-personal-bg: #d4edc9;
+    --color-tag-personal-border: #40994C;
   }
 }
 
@@ -139,4 +143,6 @@
   --color-tag-raytracing-border: #9D6BA8;
   --color-tag-ue5-bg: #ffe0cc;
   --color-tag-ue5-border: #F39C5B;
+  --color-tag-personal-bg: #d4edc9;
+  --color-tag-personal-border: #40994C;
 }

@@ -3,9 +3,9 @@ layout: base.njk
 title: Blog
 ---
 
-<h1>My Blog</h1>
+# My Blog
 
-<p>A place for me to share miscellaneous unrelated writings.</p>
+A place for me to share miscellaneous writings, on both professional and personal topics.
 
 {% set table %}{% include "blog-table.njk" %}{% endset %}
 {{ table | safe }}
