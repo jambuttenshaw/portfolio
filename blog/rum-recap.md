@@ -1,8 +1,8 @@
 ---
 layout: blog-post.njk
 title: Big Boulders on the Small Isles
-description: Trip report on bouldering trip to the Isle of Rum.
-date: 2026-10-04
+description: Trip report on a September bouldering trip to the Isle of Rum.
+date: 2026-10-26
 tags:
     - Personal
 ---
@@ -16,20 +16,20 @@ The Boulder Scotland guidebook describes the ambience of the Hallival boulders o
 
 Feeling particularly inspired, I investigated how a bouldering trip to Rum might actually work out. After finding workable dates for the ferry (which sails every 2nd day during the summer), accommodation at the bunkhouse, and pitching it to the rest of the psyched crew, I was pleasantly surprised to be met with a unanimous vote in favour of a trip. We booked to be on the island 5th to 9th of September, and our group grew to a crew of 7 and the psych was high. We dug through the all the information we could find on the established bouldering; including [this guide](https://scottishbloc.com/topos/rum-bouldering-guide/) by developer Hamish Fraser, [Thom Davies YouTube channel](https://www.youtube.com/@thomcgd), and other sporadic sources and YouTube videos.
 ## The Journey
-With a wishlist of boulders, we set out for Mallaig on Friday evening in preparation for our 7:30am sailing to Rum the next morning. The weather forecast wasn't hugely inspiring with a majorly wet outlook over the next week, with our arrival and leaving days looking the most promising. Nevertheless, we were really excited for the adventure and just to visit the island. However, it was upon eating dinner en-route in Fort William we got the dreaded text from CalMac: ferry cancelled due to a technical issue. This was particularly disastrous as the weather on the following days looked much poorer and the chance of subsequent sailings being cancelled due to the weather looked dreadfully high. Still, late in the evening and arriving in Mallaig, there was nothing to do but spend a sorrowful night in the van by the harbour and re-evaluate in the morning.
+With a wishlist of boulders, we set out for Mallaig on Friday evening in preparation for our 7:30am sailing to Rum the next morning. The weather forecast wasn't hugely inspiring with a majorly wet outlook over the next week, with our arrival and leaving days looking the most promising. Nevertheless, we were really excited for the adventure and just to visit the island. However, it was upon eating dinner en-route in Fort William we got the dreaded text from CalMac: ferry cancelled due to a technical issue with our boat. This was particularly disastrous as the weather on the following days looked much poorer and the chance of subsequent sailings being cancelled due to the weather looked dreadfully high. Still, late in the evening and arriving in Mallaig, there was nothing to do but spend a sorrowful night in the van by the harbour and re-evaluate in the morning.
 
-In the cold morning sunshine at the crack of dawn, we optimistically booked onto the next available sailing on the small backup boat on Sunday morning. With our plan for Saturday dashed, we consoled our sorrows and filled the morning with first breakfast at the bakehouse in Mallaig and subsequently second breakfast in Arisaig. It was at this point we made a significant discovery: as the reason for the cancellation was a technical issue, CalMac would reimburse £100 per person per night for accommodation and up to £48 per person per day for food... we were now on a CalMac sponsored bouldering trip and psyche was restored.
+In the cold morning sunshine at the crack of dawn, we optimistically booked onto the next available sailing on the small backup boat on Sunday morning. With our original plan for Saturday dashed, we consoled our sorrows and filled the morning with first breakfast at the bakehouse in Mallaig and subsequently second breakfast in Arisaig. It was at this point we made a significant discovery: as the reason for the cancellation was a technical issue, CalMac would reimburse £100 per person per night for accommodation and up to £48 per person per day for food... we were now on a CalMac sponsored bouldering trip and psyche was restored.
 ## Plan B
 
-{% call layout.twoColumnLayout("/images/blog/rum_recap/arisaig.png", "Warming up at Arisaig Cave.", true) %}
+{% call layout.twoColumnLayout("/images/blog/rum_recap/arisaig.png", "Arriving at Arisaig Cave, psyched to try hard on some tough boulders.", true) %}
 
 We made our way to nearby Arisaig cave for day 1 of climbing. Recent days of wet weather made the perma-dry cave an ideal choice, and hearing about the hard Dave Mac problems it contained had placed it on my radar to check out for some years. Immediately on arrival I was impressed; the cave was deep with big steep walls featuring a plentiful variety of holds. The rock is quartzite, which has formd hard, flat, and angular holds not terribly dissimilar in texture from the basalt of Dumbarton Rock. The steepness of the walls, the flat nature of the holds, plus a jumble of hanging flakes and overhung shelves offering many a kneebar opportunity, made for full-body technical climbing with a cerebral element of deciphering the many beta possibilities available.
 
 {% endcall %}
 
-{% call layout.twoColumnLayout("/images/blog/rum_recap/arisaig_original.png", "On the flash attempt of *Arisaig Original*.", false) %}
+{% call layout.twoColumnLayout("/images/blog/rum_recap/arisaig_original.png", "On a redpoint attempt of *Bone Broke*.", false) %}
 
-After warming up on the jovial hands-free kneebar finish of [*Barista School 6A+*](https://www.ukclimbing.com/logbook/crags/arisaig_cave-17805/barista_school-445541), I had a good but not quite good enough flash attempt on the classic of the crag [*Arisaig Original 7B*](https://www.ukclimbing.com/logbook/crags/arisaig_cave-17805/arisaig_original-404068), falling just a couple of moves from the top after a hard fight. After a few attempts to refine beta I got the send on the next redpoint. The rest of the session I spent working [*Bone Broke 7C*](https://www.ukclimbing.com/logbook/crags/arisaig_cave-17805/bone_broke-442189), which extended the crux of *Arisaig Original* into a very physical transition to a long and technical exit into the very roof of the cave. Being such a long and intricate boulder, each beta refinement goes a long way and it feels to be the type of boulder problem that just keeps on giving. However, is has to be said that it must be one of the hardest 7C's I've ever tried.
+After warming up on the jovial hands-free kneebar finish of [*Barista School 6A+*](https://www.ukclimbing.com/logbook/crags/arisaig_cave-17805/barista_school-445541), I had a good but not-quite-good-enough flash attempt on the classic of the crag [*Arisaig Original 7B*](https://www.ukclimbing.com/logbook/crags/arisaig_cave-17805/arisaig_original-404068), falling just a couple of moves from the top after a hard fight. After a few attempts to refine beta I got the send on the next redpoint. The rest of the session I spent working [*Bone Broke 7C*](https://www.ukclimbing.com/logbook/crags/arisaig_cave-17805/bone_broke-442189), which extended the crux of *Arisaig Original* into a very physical transition to a long and technical exit into the very roof of the cave. Being such a long and intricate boulder, each beta refinement goes a long way and it feels to be the type of boulder problem that just keeps on giving. However, is has to be said that it must be one of the hardest 7C's I've ever tried.
 
 {% endcall %}
 
@@ -60,19 +60,33 @@ After the Giant Slab we pressed onto the Upper Coire South boulder field, where 
 
 Unsurprisingly, but disappointing nonetheless, the top of the boulders were pretty soaked upon arrival. Despite everything, we had nothing to do except have a go at drying out the top-out of *Cell Block H 7B+* and try get some climbing in. We placed some rocks over the stream going directly through the landing, arranged tarps and pads, and toweled and brushed and chalked the holds. Gabbro is fascinating; despite being soaked on our arrival, it felt like we were watching it dry in real time and by the time we were getting ready to climb the boulder was mostly completely dry.
 
-{% call layout.twoColumnLayout("/images/blog/rum_recap/cellblockh.png", "Greggy on the send of *Cell Block H 7B*.", false) %}
+![](/images/blog/rum_recap/cellblockh.png)
+
+<div class="image-caption">
+Trying hard in the crux of <i>Cell Block H 7B+</i>. If it wasn't hemmed in by awkward blocks, it would be a truly stellar line. Regardless; the holds and moves on offer are superb.
+</div>
 
 *Cell Block H* has some of the most unique holds I have ever seen; large shield-like plates that protrude from the wall offering a selection of good crimps, edges, and jugs on an overhanging face. The meat of the problem is in its first one or two moves, either using a combination of a flat edge out right and strenuous heel hook, or a big lunge off of poor feet directly to the next shield. I opted for the more static and controllable heel beta, using a small intermediate crimp on the first move, and was really pleased to execute the flash of the boulder. The selection of holds on this line alone make it so worthwhile, and the gradually easing moves give nothing but joyful climbing once past the low-down crux.
 
-{% endcall %}
+The other line I had my eyes on to try was [*La Jura Jura 7C+*](https://www.ukclimbing.com/logbook/crags/hallival_boulders-11417/la_jura_jura-315687), which not only had a fantastic name but had some lovely small crimps in a beautiful band of quartz before finishing up better gabbro edges. I had fancied this problem as being in my style, and upon inspecting, cleaning, and chalking the holds I became more confident in my chances on it. On the first move, the first ascentionist had powered right hand into a slick and slopy quartz flatty before moving left hand up into a good gaston off of a far out foot. After feeling the lack of texture on this quartz hold, I couldn't help but feel that starting with crossed hands would be more plausible, enabling me to isolate the better of the starting holds and move into a small gabbro crimp just below the quartz band.
 
-The other line I had my eyes on to try was [*La Jura Jura 7C+*](https://www.ukclimbing.com/logbook/crags/hallival_boulders-11417/la_jura_jura-315687), which not only had a fantastic name but had some lovely small crimps in a beautiful band of quartz before finishing up better gabbro edges. I had fancied this problem as being in my style, and upon inspecting, cleaning, and chalking the holds I became more confident in my chances on it. On the first move, the first ascent had powered right hand into a slick and slopy quartz flatty before moving left hand up into a good gaston off of a far out foot. After feeling the lack of texture on this quartz hold, I couldn't help but feel that starting with crossed hands would be more plausible, enabling me to isolate the better of the starting holds and move into a small gabbro crimp just below the quartz band.
+![](/images/blog/rum_recap/la_jura_jura_crux.png)
 
-Believing in my beta, I felt focused and pulled on for a flash go. Immediately I knew this was the correct beta for me after executing the first move statically. It felt incredibly flowy moving through the improving edges, kicking my foot up high to the right, making the long right-hand reach, and couldn't quite believe I was already lining up for the good holds on the lip. After a little shuffling around on the top out, I pulled on top of the boulder feeling elated. Not just for sending a boulder I'd been eyeing for 6 months, or flashing what was on paper Rum's hardest established problem, but thrilled with the quality of my execution and staying completely in control throughout. It gave me deep satisfaction in my strength and ability to move, and easily a climbing highlight.
+<div class="image-caption">
+On the flash attempt of <i>La Jura Jura 7C+</i>, with the fingers really working hard on the small gabbro crimps. Starting with arms crossed allowed extra control through the first two moves.
+</div>
 
-Despite having only climbed three lines; the long walk in, landing building, and boulder drying had consumed enough time that darkness was fast approaching. We made our way back down to the bunkhouse in the dark, with heavy rain setting in just in time to soak us before we made it to the safety of the bunkhouse. The hour was late after we had cooked, ate, and cleaned, and after a short stretching session we settled in to sleep for another rest day owing again to the poor weather forecast.
+Believing in my beta, I felt focused and pulled on for a flash go. Immediately I knew this was the correct beta for me after executing the first move statically. It felt incredibly flowy moving through the improving edges, kicking my foot up high to the right, making the long right-hand reach, and couldn't quite believe I was already lining up for the good holds on the lip. After a little shuffling around on the top out, I pulled on top of the boulder feeling elated. Not just for sending a boulder I'd been eyeing for 6 months, or flashing what was on paper Rum's hardest established problem, but thrilled with the quality of my execution and staying completely in control throughout. It gave me deep satisfaction in my strength and ability to move, and easily a highlight of my climbing career so far.
 
-{% call layout.twoColumnLayout("/images/blog/rum_recap/rum_rest_day.png", "Rest day on Rum. Looking back down towards the bay, the only populated area on the island.", true) %}
+![](/images/blog/rum_recap/la_jura_jura.png)
+
+<div class="image-caption">
+Through the crux and locked in for the send. No dropping it now!
+</div>
+
+Despite having only climbed three lines; the long walk in, landing building, and boulder drying had consumed enough time that darkness was fast approaching. We made our way back down to the bunkhouse in the dark, with heavy rain setting in just in time to soak us before we made it to the safety of the bunkhouse. The hour was late after we had cooked, ate, and cleaned, and after a short stretching session we settled in to sleep for another rest day owing again to the poor weather forecast the next day.
+
+{% call layout.twoColumnLayout("/images/blog/rum_recap/rum_rest_day.png", "Rest day on Rum in a break between the showers. Looking back down towards the bay, the only populated area on the island.", true) %}
 
 The rest day was spent between reading and drinking coffee in the bunkhouse, with occasional sessions of spying across the loch with the binoculars looking for wildlife. We were lucky enough to see an otter at very close proximity, and we were delighted to watch it splashing and swimming around. After lunch we hiked up the glen to see across to Kilmory, before coming back down over Mullach Mor to catch views of Skye, Eigg, and the Rum Cuillin. After surviving the rain, we settled in for another cozy evening in the bunkhouse ahead of a big final day.
 
@@ -86,20 +100,35 @@ The rest day was spent between reading and drinking coffee in the bunkhouse, wit
 Wednesday morning views of Skye as we hiked to the boulders, with the clouds lifting from the Black Cuillin on the left. 
 </div>
 
+{% call layout.twoColumnLayout("/images/blog/rum_recap/rum_day_2_warmup.png", "Warming up on easy but beautiful boulders on a glorious final day on Rum.", false) %}
+
 Time constraints played another big factor in our final day on Rum. With the hard deadline of our ferry back to the mainland at 15:55 (with the next one not until Friday), we needed to be off the mountain and at the pier by 15:30. With an hour and a half of walking each way to the boulders, our strategy was to be out of the bunkhouse and hiking by 7am to give us roughly 5 hours of climbing time. Our final day was also by far the best weather day, and the grogginess of the early wake was shaken away from watching the sun rise behind Eigg with stunning views over to the Black Cuillin of Skye as we made our way up the hill.
 
 Our initial goal of the day was to return to the Coire nan Gruund South jumble to try [*Highball Paul 6C+*](https://www.ukclimbing.com/logbook/crags/hallival_boulders-11417/highball_paul-151455), but sadly it was quite mossy and the moss had not dried out from yesterdays rain; it was in an unclimbable condition. With more time it would have been great to clean it, because it's a cracking line. Instead we climbed [*Diesel Power 7A*](https://www.ukclimbing.com/logbook/crags/hallival_boulders-11417/diesel_power-151454) on the same face, with big moves on good edges to top out at two-thirds height. After a solid flash on the stand, I went for a go on [the sit at 7B+](https://www.ukclimbing.com/logbook/crags/hallival_boulders-11417/diesel_power_sit-start-315686). It adds two moves into the stand, the first being a significant crux involving a strenuous pull off of a flat undercling and bunched feet into a vertical but grippy pinch. I stuck the lower moves first try, before punting the stand and subsequently taking a few more attempts to send. Overall the sit adds a good amount of burl and difficulty into the stand, making a worthwhile problem.
 
+{% endcall %}
+
 We moved on to try [*Serious Music 7B*](https://www.ukclimbing.com/logbook/crags/hallival_boulders-11417/serious_music-315685), which glistened attractively in the sun. It starts from a big side pulling jug before following worsening pinchy sidepulls into a lunge to the lip. I fluffed the flash go, not realizing exactly how to take the penultimate hold; after closer inspection I discovered the perfect dimple for the thumb which completely transformed the grip. The next attempt I executed well and topped out the boulder. With superb moves and a clean line, this is definitely a boulder to try.
+
+![](/images/blog/rum_recap/serious_music.png)
+
+<div class="image-caption">
+Lining up for the last move on <i>Serious Music 7B</i>, using the poor mini pinch for right hand.
+</div>
 
 With a couple of hours remaining, we moved to the Coire nan Gruund North jumble to try a couple of lines on the *Thor's Revenge* boulder. We started on [*Thunder 6C*](https://www.ukclimbing.com/logbook/crags/hallival_boulders-11417/thunder-315682), starting on a good edge with a cryptic choice of poor holds to move up to a decent jug before topping out. I opted to use a small sharp crimp, which enabled me to move my feet up and move to the jug statically. I then had a look at the even more cryptic [sitter, which goes at 7B](https://www.ukclimbing.com/logbook/crags/hallival_boulders-11417/thunder_and_lightning-315683). A selection of poor crimps and pinches follow the arete allowing you to gain the good edge of the stand start. After a couple of attempts working out my sequence, I found a heel on a small foot chip that enabled a clamping action between the legs to significantly aid moving through the small crimps and I was able to send the problem. It has a beautiful line, and I found the sharp ratty crimps a welcome change from the velcro-like slopers and edges we had found on other problems.
 
-With minutes remaining before pads needed to be on backs, there was time for one final boulder. There was an unclimbed project on the *Whisky Boulder* named [*Balvenie*,](https://www.ukclimbing.com/logbook/crags/hallival_boulders-11417/balvenie_project-257592) which took a stand start to a hanging arete. It ended up being a delightful problem to climb and I was delighted to make the first ascent, where I thought it goes around the 6A difficulty. It utilizes a heel-over-hand move to enable slapping up the arete to rock over the foot, giving a great moment of playful climbing and a sweet conclusion to my bouldering on Rum.
+{% call layout.twoColumnLayout("/images/blog/rum_recap/balvenie.png", " ", true) %}
+
+With minutes remaining before pads needed to be on backs, there was time for one final boulder. There was an unclimbed project on the *Whisky Boulder* named [*Balvenie*,](https://www.ukclimbing.com/logbook/crags/hallival_boulders-11417/balvenie_project-257592) which took a stand start to a hanging arete. It ended up being a delightful problem to climb and I was pleased to make the first ascent, where I thought it goes around the 6A difficulty. It utilizes a heel-over-hand move to enable slapping up the arete to rock over the foot, giving a great moment of playful climbing and a sweet conclusion to my bouldering on Rum.
+
+{% endcall %}
+
 ## Back to the Ferry
 
 {% call layout.twoColumnLayout("/images/blog/rum_recap/last_view.png", "Looking back across the sea to the mainland as we head back from the boulders.", true) %}
 
-Our final stomp down the hill to get the ferry gave time for reflection about the climbing. Even in the curtailed duration we were on the island, did Rum live up to our expectations? I definitely think so. Despite ferry complications, poor weather, wet and occasionally unclean rock (which is rather hard to avoid in such a remote and seldom climbed location), it remained an unforgettable bouldering experience. The island itself is dramatic and endlessly fascinating, with a truly unbelievable setting for the bouldering (potentially even exceeding the beauty of the Torridon Celtic jumble). With plenty of quality problems to go at and a large amount of potential for new boulders and project yet, it is definitely a destination to offer a remarkably unique and adventurous bouldering trip.
+Our final stomp down the hill to get the ferry gave time for reflection about the climbing. Even in the curtailed duration we were on the island, did Rum live up to our expectations? I definitely think so. Despite ferry complications, poor weather, wet and occasionally unclean rock (which is rather hard to avoid in such a remote and seldom climbed location), it remained an unforgettable bouldering experience. The island itself is dramatic and endlessly fascinating, with a truly unbelievable setting for the bouldering (potentially even exceeding the beauty of the Torridon Celtic jumble). With plenty of quality problems to go at and a large amount of potential for new boulders and projects yet, it is definitely a destination to offer a remarkably unique and adventurous bouldering trip.
 
 {% endcall %}
 
