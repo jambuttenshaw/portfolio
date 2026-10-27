@@ -62,9 +62,70 @@ function initializeTheme() {
   }
 }
 
+// Mobile navigation (burger menu)
+// Below the 899px breakpoint the nav link list collapses behind the burger
+// button; the panel itself is pure CSS (display: none / .open, see
+// style.css), so this only flips the class and keeps the ARIA state in sync.
+function initializeMobileNav() {
+  const toggle = document.getElementById('nav-toggle');
+  const panel = document.getElementById('nav-links');
+  if (!toggle || !panel) {
+    return;
+  }
+
+  function setNavOpen(open) {
+    panel.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    const icon = toggle.querySelector('.fa');
+    if (icon) {
+      icon.classList.toggle('fa-bars', !open);
+      icon.classList.toggle('fa-times', open);
+    }
+  }
+
+  toggle.addEventListener('click', () => {
+    setNavOpen(!panel.classList.contains('open'));
+  });
+
+  // Close when a page link is chosen (page loads reset the state anyway;
+  // this keeps same-page anchor links tidy)
+  panel.addEventListener('click', (e) => {
+    if (e.target.closest('a')) {
+      setNavOpen(false);
+    }
+  });
+
+  // Escape closes and returns focus to the burger
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && panel.classList.contains('open')) {
+      setNavOpen(false);
+      toggle.focus();
+    }
+  });
+
+  // Tapping/clicking outside the header closes the panel
+  document.addEventListener('click', (e) => {
+    if (panel.classList.contains('open') && !e.target.closest('header')) {
+      setNavOpen(false);
+    }
+  });
+
+  // Growing past the breakpoint: drop the mobile state so nothing is stuck
+  const desktopQuery = window.matchMedia('(min-width: 900px)');
+  desktopQuery.addEventListener('change', (e) => {
+    if (e.matches) {
+      setNavOpen(false);
+    }
+  });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   // Initialize theme
   initializeTheme();
+
+  // Initialize mobile nav
+  initializeMobileNav();
 
   // Add smooth scrolling to navigation links
   const navLinks = document.querySelectorAll('nav a');

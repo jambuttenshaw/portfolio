@@ -36,6 +36,8 @@ nav {
 nav h1 {
   font-size: 2.3rem;
   color: var(--color-nav-text);
+  /* The brand never wraps, even when the nav row is tight */
+  white-space: nowrap;
 }
 
 .nav-brand {
@@ -113,6 +115,12 @@ nav ul a:focus:not(:focus-visible) {
 
 nav ul a:focus-visible {
   outline: none;
+}
+
+/* Burger button: hidden on wide screens where the link list is visible;
+   shown (with its full styling) in the max-width: 899px media query below */
+.nav-toggle {
+  display: none;
 }
 
 /* Theme selector: three options in a row, the selected one highlighted */
@@ -334,13 +342,84 @@ td img:hover {
   display: table-cell;
 }
 
-@media (max-width: 768px) {
-  nav h1 {
-    font-size: 1.3rem;
+/* The burger kicks in below the width where the full desktop row
+   (brand + links + theme toggle ≈ 810px) stops fitting, with margin to
+   spare. Keep in sync with the matchMedia query in js/main.js. */
+@media (max-width: 899px) {
+  /* Mobile nav: the link list collapses behind the burger button into a
+     dropdown panel that drops below the brand row. The panel is hidden by
+     default and shown via the .open class (toggled in js/main.js); the
+     theme toggle lives inside the panel. */
+  nav {
+    flex-wrap: wrap;
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.2rem;
+    color: var(--color-nav-text);
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .nav-toggle:hover {
+    background-color: rgba(0, 0, 0, 0.08);
+  }
+
+  .nav-toggle:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-nav-accent);
+  }
+
+  .nav-toggle .fa {
+    transition: transform 0.2s ease;
+  }
+
+  .nav-toggle:active .fa {
+    transform: scale(0.9);
+  }
+
+  nav ul {
+    flex-basis: 100%; /* own row under the brand */
+    flex-direction: column;
+    align-items: stretch;
+    transform: none; /* the desktop optical nudge doesn't apply stacked */
+    display: none;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.15);
+  }
+
+  nav ul.open {
+    display: flex;
+    animation: nav-panel-in 0.15s ease;
+  }
+
+  nav ul li {
+    margin: 0;
   }
 
   nav ul a {
+    display: block; /* full-width rows with roomy tap targets */
+    padding: 0.6rem 0.25rem;
     font-size: 0.9rem;
+  }
+
+  /* Centre the theme toggle inside the panel */
+  nav ul li:last-child {
+    margin-top: 0.5rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  nav h1 {
+    font-size: 1.3rem;
   }
 
   .preview-column {
@@ -483,4 +562,17 @@ main img {
   max-width: 100%;
   height: auto;
   display: block;
+}
+
+/* Mobile nav panel drop-in (see the max-width: 899px media query) */
+@keyframes nav-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
