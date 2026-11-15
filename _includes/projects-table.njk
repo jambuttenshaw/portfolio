@@ -19,7 +19,15 @@
           <em>No preview available</em>
           {% endif %}
         </td>
-        <td><a href="{{ project.url }}">{{ project.data.title }}</a></td>
+        <td>
+          {% if project.data.external_url %}
+          <a href="{{ project.data.external_url }}">
+          {% else %}
+          <a href="{{ project.url }}">
+          {% endif %}
+            {{ project.data.title }}
+          </a>
+        </td>
         <td class="tags-column">
           {% if project.data.tags %}
           {% set tags = project.data.tags %}
