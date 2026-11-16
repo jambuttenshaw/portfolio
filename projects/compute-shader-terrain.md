@@ -5,6 +5,7 @@ description: Terrain generation on the GPU and rendered in a custom DirectX 11 r
 github: https://github.com/jambuttenshaw/ProceduralWorldGeneration
 hidden: true
 image: /images/terrain.png
+date: 2026-03-11
 tags:
     - Cpp
     - D3D11

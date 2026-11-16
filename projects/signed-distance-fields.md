@@ -6,6 +6,7 @@ description:
 github: https://github.com/jambuttenshaw/sdf_d3d12
 hidden: false
 image: /images/sdf.png
+date: 2026-05-07
 tags:
     - Cpp
     - D3D12

@@ -11,8 +11,11 @@ export default function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("resources");
 
   // Collections
+  // Projects, newest first (requires a `date` field in the front matter)
   eleventyConfig.addCollection("projects", function(collectionApi) {
-    return collectionApi.getFilteredByGlob("projects/*.md");
+    return collectionApi
+      .getFilteredByGlob("projects/*.md")
+      .sort((a, b) => b.data.date - a.data.date);
   });
 
   // Blog posts, newest first (requires a `date` field in the front matter)
